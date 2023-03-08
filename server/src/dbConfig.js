@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const { MONGO_URI } = require("./config");
+
 mongoose.set("strictQuery", false);
 
-export default async () => {
+module.exports = async () => {
   try {
     const conn = await mongoose.connect(MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);

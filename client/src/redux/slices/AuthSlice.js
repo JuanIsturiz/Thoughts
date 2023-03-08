@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { authService } from "../Services/AuthService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// const user = JSON.parse(AsyncStorage.getItem("user"));
+import { authService } from "../services/AuthService";
+import { getAsyncStorage } from "../../utils/asyncStorageHelper";
 
 const initialState = {
   user: null,
@@ -11,6 +9,18 @@ const initialState = {
   isError: false,
   message: "",
 };
+
+export const getUser = createAsyncThunk("auth/getUser", async (_, thunkAPI) => {
+  try {
+    return await getAsyncStorage("user");
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -42,12 +52,38 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    return await authService.logout();
+  } catch (err) {
+    const message =
+      (err.response && err.response.data && err.response.data.message) ||
+      err.message ||
+      err.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(getUser.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = true;
         state.isSuccess = true;
@@ -65,14 +101,26 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = true;
         state.isSuccess = true;
-        console.log("action.payload");
-        console.log(action.payload);
-        // state.user = action.payload;
+        state.user = action.payload;
       })
       .addCase(login.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = true;
+        state.user = null;
+      })
+      .addCase(logout.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

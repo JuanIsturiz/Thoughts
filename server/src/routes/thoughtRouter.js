@@ -9,7 +9,7 @@ const {
   updateById,
 } = require("../controllers/thoughtController");
 
-const authenticate = require("../middlewares/authMiddleware");
+const authenticate = require("../middleware/auth");
 
 // get all thoughts
 thoughtRouter.get("/", getAll);

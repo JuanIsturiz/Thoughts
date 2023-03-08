@@ -1,9 +1,9 @@
-import expressAsyncHandler from "express-async-handler";
+const asyncHandler = require("express-async-handler");
 
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-const authenticate = expressAsyncHandler(async (req, res, next) => {
+const authenticate = asyncHandler(async (req, res, next) => {
   let token;
   const header = req.headers.authorization;
   try {
@@ -11,16 +11,14 @@ const authenticate = expressAsyncHandler(async (req, res, next) => {
       // get token
       token = header.split(" ")[1];
       // verify token
-      console.log(jwt.verify(token, process.env.JWT_SECRET));
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // get user info
       req.user = await User.findById(decoded.id).select("-password");
-      console.log(req.user);
       next();
     }
-  } catch (error) {
+  } catch (err) {
     res.status(401);
-    throw new Error("Not Authorized");
+    throw new Error(err.message);
   }
   if (!token) {
     res.status(401);

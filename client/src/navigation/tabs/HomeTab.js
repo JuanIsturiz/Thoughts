@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 export default function HomeNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator /* screenOptions={{ headerShown: false }} */>
       <Tab.Screen
         name="Feed"
         component={FeedScreen}

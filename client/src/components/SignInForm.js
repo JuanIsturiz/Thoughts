@@ -42,10 +42,8 @@ const SignInForm = () => {
         />
       </View>
       <View style={{ alignItems: "center", marginBottom: 50 }}>
-        <Pressable style={styles.pressable}>
-          <Text style={{ fontSize: 28, fontWeight: "300" }} onPress={signIn}>
-            Log In
-          </Text>
+        <Pressable style={styles.pressable} onPress={signIn}>
+          <Text style={{ fontSize: 28, fontWeight: "300" }}>Log In</Text>
         </Pressable>
       </View>
       <View style={{ alignItems: "center" }}>
@@ -53,20 +51,13 @@ const SignInForm = () => {
           style={{
             fontSize: 24,
             fontWeight: "300",
-            marginBottom: 10,
-            borderBottomColor: "#000",
-            borderBottomWidth: 5,
+            marginBottom: 8,
           }}
         >
           Does not have an account?
         </Text>
-        <Pressable style={styles.pressable}>
-          <Text
-            style={{ fontSize: 24, fontWeight: "300" }}
-            onPress={() => navigate("Sign Up")}
-          >
-            Go to Sign Up
-          </Text>
+        <Pressable style={styles.pressable} onPress={() => navigate("Sign Up")}>
+          <Text style={{ fontSize: 24, fontWeight: "300" }}>Go to Sign Up</Text>
         </Pressable>
       </View>
     </>
@@ -76,7 +67,7 @@ const SignInForm = () => {
 const styles = StyleSheet.create({
   view: {
     width: 350,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   text: {
     fontSize: 22,

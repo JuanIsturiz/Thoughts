@@ -1,9 +1,9 @@
-import express from "express";
+const express = require("express");
 const app = express();
 const { PORT } = require("./config");
 const cors = require("cors");
-import connectDB from "./db";
-const { errorHandler } = require("./middlewares/errorMiddelware");
+const connectDB = require("./dbConfig");
+const { errorHandler } = require("./middleware/error");
 
 // basic express config
 app.use(express.json());

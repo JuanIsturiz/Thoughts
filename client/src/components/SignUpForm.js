@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
+import { register } from "../redux/slices/AuthSlice";
+import { useDispatch } from "react-redux";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const { navigate } = useNavigation();
   const [userData, setUserData] = useState({
     username: "",
@@ -13,7 +16,6 @@ const SignUpForm = () => {
   const [isValidEmail, setIsValidEmail] = useState(false);
 
   const validateEmail = () => {
-    console.log(userData.email);
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (!reg.test(userData.email)) {
       setIsValidEmail(false);
@@ -74,9 +76,7 @@ const SignUpForm = () => {
       <View style={{ alignItems: "center", marginBottom: 50 }}>
         <Pressable
           style={styles.pressable}
-          onPress={() => {
-            console.log(process.env);
-          }}
+          onPress={() => dispatch(register(userData))}
         >
           <Text style={{ fontSize: 28, fontWeight: "300" }}>Register</Text>
         </Pressable>
@@ -87,19 +87,12 @@ const SignUpForm = () => {
             fontSize: 24,
             fontWeight: "300",
             marginBottom: 10,
-            borderBottomColor: "#000",
-            borderBottomWidth: 5,
           }}
         >
           Already have an account?
         </Text>
-        <Pressable style={styles.pressable}>
-          <Text
-            style={{ fontSize: 24, fontWeight: "300" }}
-            onPress={() => navigate("Sign In")}
-          >
-            Go to Sign In
-          </Text>
+        <Pressable style={styles.pressable} onPress={() => navigate("Sign In")}>
+          <Text style={{ fontSize: 24, fontWeight: "300" }}>Go to Sign In</Text>
         </Pressable>
       </View>
     </>
@@ -109,7 +102,7 @@ const SignUpForm = () => {
 const styles = StyleSheet.create({
   view: {
     width: 350,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   text: {
     fontSize: 22,

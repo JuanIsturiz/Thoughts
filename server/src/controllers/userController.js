@@ -1,4 +1,4 @@
-import expressAsyncHandler from "express-async-handler";
+const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -7,7 +7,7 @@ const User = require("../models/userModel");
 // @desc    Register user
 // @route   POST /api/users
 // @access  Private
-module.exports.register = expressAsyncHandler(async (req, res) => {
+module.exports.register = asyncHandler(async (req, res) => {
   const { username, email, password, password2 } = req.body;
 
   // inputs check
@@ -49,9 +49,8 @@ module.exports.register = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports.login = expressAsyncHandler(async (req, res) => {
+module.exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   // inputs check
   if (!email || !password) {
     res.status(400);

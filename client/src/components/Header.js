@@ -3,11 +3,11 @@ import { Pressable } from "react-native";
 import { View, Text, StyleSheet } from "react-native";
 import EntyPo from "react-native-vector-icons/Entypo";
 
-const Header = () => {
+const Header = ({ onModal }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thoughts</Text>
-      <Pressable onPress={() => console.log(123)}>
+      <Pressable onPress={onModal}>
         <EntyPo name="squared-plus" size={60} color="#BCCEF8" />
       </Pressable>
     </View>

@@ -1,7 +1,7 @@
-import expressAsyncHandler from "express-async-handler";
+const asyncHandler = require("express-async-handler");
 const Thought = require("../models/thoughtModel");
 
-exports.getAll = expressAsyncHandler(async (req, res) => {
+exports.getAll = asyncHandler(async (req, res) => {
   try {
     const thoughts = await Thought.find();
     res.json(thoughts);
@@ -11,7 +11,7 @@ exports.getAll = expressAsyncHandler(async (req, res) => {
   }
 });
 
-exports.getById = expressAsyncHandler(async (req, res) => {
+exports.getById = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -23,7 +23,7 @@ exports.getById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-exports.getByEmotion = expressAsyncHandler(async (req, res) => {
+exports.getByEmotion = asyncHandler(async (req, res) => {
   const { emotion } = req.params;
 
   try {
@@ -35,7 +35,7 @@ exports.getByEmotion = expressAsyncHandler(async (req, res) => {
   }
 });
 
-exports.addThought = expressAsyncHandler(async (req, res) => {
+exports.addThought = asyncHandler(async (req, res) => {
   const { text, emotion } = req.body;
   const userId = req.user.id;
 
@@ -62,7 +62,7 @@ exports.addThought = expressAsyncHandler(async (req, res) => {
   }
 });
 
-exports.deleteById = expressAsyncHandler(async (req, res) => {
+exports.deleteById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
     await Thought.findByIdAndDelete(id);
@@ -73,7 +73,7 @@ exports.deleteById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-exports.updateById = expressAsyncHandler(async (req, res) => {
+exports.updateById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { userId, action } = req.body;
 

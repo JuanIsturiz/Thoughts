@@ -1,13 +1,18 @@
+import { ScrollView } from "react-native";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
+import { useSelector } from "react-redux";
+import LogoutButton from "../components/LogoutButton";
 import ThoughtPost from "../components/ThoughtPost";
 
 const UserScreen = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <View>
       <View style={styles.header}>
         <Text style={styles.header_title}>Profile</Text>
       </View>
+      <LogoutButton />
       <View style={styles.user_info}>
         <View
           style={{
@@ -17,7 +22,9 @@ const UserScreen = () => {
             marginBottom: 15,
           }}
         >
-          <Text style={{ fontSize: 32 }}>Sample Username</Text>
+          <Text style={{ fontSize: 32 }}>
+            {user ? user.username : "Sample User"}
+          </Text>
           <Pressable onPress={() => console.log(123)}>
             <Feather name="settings" size={30} />
           </Pressable>
@@ -26,13 +33,14 @@ const UserScreen = () => {
           <Text style={{ fontSize: 18 }}>Sample user bio...</Text>
         </View>
       </View>
-
-      <View style={styles.container}>
-        <ThoughtPost />
-        <ThoughtPost />
-        <ThoughtPost />
-        <ThoughtPost />
-      </View>
+      <ScrollView style={{ height: 700 }}>
+        <View style={styles.container}>
+          <ThoughtPost />
+          <ThoughtPost />
+          <ThoughtPost />
+          <ThoughtPost />
+        </View>
+      </ScrollView>
     </View>
   );
 };

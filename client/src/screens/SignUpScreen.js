@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FAF7F0",
+    marginVertical: 5,
   },
   title: {
     fontSize: 32,
