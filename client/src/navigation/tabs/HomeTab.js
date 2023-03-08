@@ -2,15 +2,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FeedScreen from "../../screens/FeedScreen";
 import SearchScreen from "../../screens/SearchScreen";
 import UserScreen from "../../screens/UserScreen";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeNavigator() {
   return (
-    <Tab.Navigator /* screenOptions={{ headerShown: false }} */>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Feed"
         component={FeedScreen}

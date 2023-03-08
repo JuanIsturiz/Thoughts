@@ -14,7 +14,7 @@ app.use(cors());
 app.use("/user", require("./routes/userRouter"));
 
 // thoughts routes
-app.use("/thoughts", require("./routes/thoughtRouter"));
+app.use("/thought", require("./routes/thoughtRouter"));
 
 // error middleware
 app.use(errorHandler);

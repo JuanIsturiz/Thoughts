@@ -1,6 +1,6 @@
 import { ScrollView } from "react-native";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
+import Feather from "@expo/vector-icons/Feather";
 import { useSelector } from "react-redux";
 import LogoutButton from "../components/LogoutButton";
 import ThoughtPost from "../components/ThoughtPost";

@@ -24,8 +24,12 @@ const SignInForm = () => {
           style={styles.textInput}
           placeholder="ex: johndoe@gmail.com"
           value={userData.email}
+          autoFocus={true}
           onChangeText={(text) =>
-            setUserData((prev) => ({ ...prev, email: text }))
+            setUserData((prev) => ({
+              ...prev,
+              email: text,
+            }))
           }
         />
       </View>

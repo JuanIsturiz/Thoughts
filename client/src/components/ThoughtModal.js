@@ -1,10 +1,31 @@
 import React, { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { Modal, View, Text, Pressable } from "react-native";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Picker } from "@react-native-picker/picker";
+
+const emotions = [
+  "contempt",
+  "fear",
+  "anger",
+  "shame",
+  "surprise",
+  "disgust",
+  "joy",
+  "distress",
+  "interest",
+  "guilt",
+];
 
 const ThoughtModal = ({ showModal, setShowModal }) => {
   const [text, setText] = useState("");
+  const [selectedEmotion, setSelectedEmotion] = useState("contempt");
+
+  const onClose = () => {
+    setShowModal(!showModal);
+    setText("");
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -17,7 +38,7 @@ const ThoughtModal = ({ showModal, setShowModal }) => {
     >
       <View style={styles.container}>
         <View style={styles.close}>
-          <Pressable onPress={() => setShowModal(!showModal)}>
+          <Pressable onPress={onClose}>
             <AntDesign name="close" color="#000" size={30} />
           </Pressable>
         </View>
@@ -28,10 +49,31 @@ const ThoughtModal = ({ showModal, setShowModal }) => {
           <View style={styles.box}>
             <TextInput
               style={styles.textInput}
+              autoFocus={true}
+              multiline={true}
               value={text}
               onChangeText={(text) => setText(text)}
-            ></TextInput>
+              placeholder="I'm thinking about cookies.."
+            />
           </View>
+        </View>
+        <View style={styles.bottom}>
+          <View style={styles.picker}>
+            <Picker
+              itemStyle={{ fontSize: 16 }}
+              selectedEmotion={selectedEmotion}
+              onValueChange={(emotiomValue, itemIndex) =>
+                setSelectedEmotion(emotiomValue)
+              }
+            >
+              {emotions.map((emotion) => (
+                <Picker.Item key={emotion} label={emotion} value={emotion} />
+              ))}
+            </Picker>
+          </View>
+          <Pressable style={styles.pressable}>
+            <Text style={{ fontSize: 24 }}>Think It Out Loud!</Text>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -41,7 +83,7 @@ const ThoughtModal = ({ showModal, setShowModal }) => {
 const styles = StyleSheet.create({
   container: {
     width: 350,
-    height: 350,
+    height: 450,
     padding: 10,
     backgroundColor: "#FAF7F0",
     shadowColor: "#000",
@@ -50,20 +92,41 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     borderRadius: 5,
     marginTop: 75,
-    marginHorizontal: "auto",
+    marginLeft: 30,
   },
   close: {
     alignItems: "flex-end",
   },
   box: {
     padding: 5,
-    borderColor: "#222",
+    borderColor: "#777",
     borderWidth: 2,
     borderRadius: 5,
-    height: 200,
+    height: 150,
   },
   textInput: {},
   main: {},
+  picker: {
+    marginTop: 10,
+    fontSize: 2,
+    width: 150,
+    borderColor: "#777",
+    borderWidth: 2,
+    borderRadius: 5,
+  },
+  bottom: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 15,
+  },
+  pressable: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: "#BCCEF8",
+    borderRadius: 5,
+  },
 });
 
 export default ThoughtModal;

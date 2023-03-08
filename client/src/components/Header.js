@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable } from "react-native";
 import { View, Text, StyleSheet } from "react-native";
-import EntyPo from "react-native-vector-icons/Entypo";
+import EntyPo from "@expo/vector-icons/Entypo";
 
 const Header = ({ onModal }) => {
   return (

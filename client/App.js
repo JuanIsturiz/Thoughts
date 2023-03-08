@@ -7,6 +7,7 @@ import AuthNavigator from "./src/navigation/stacks/AuthStack";
 import HomeNavigator from "./src/navigation/tabs/HomeTab";
 import { getUser } from "./src/redux/slices/AuthSlice";
 import { useEffect } from "react";
+import { View } from "react-native";
 
 const AppWrapper = () => {
   const dispatch = useDispatch();
@@ -15,10 +16,11 @@ const AppWrapper = () => {
     dispatch(getUser());
   }, [dispatch]);
   return (
-    <NavigationContainer>
-      {!user ? <AuthNavigator /> : <HomeNavigator />}
-      <HomeNavigator />
-    </NavigationContainer>
+    <View style={{ flex: 1, backgroundColor: "#BCCEF8", paddingTop: 50 }}>
+      <NavigationContainer>
+        {!user ? <AuthNavigator /> : <HomeNavigator />}
+      </NavigationContainer>
+    </View>
   );
 };
 
