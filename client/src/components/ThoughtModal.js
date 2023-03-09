@@ -5,29 +5,17 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Picker } from "@react-native-picker/picker";
 import { createThought } from "../redux/slices/ThoughtSlice";
 import { useDispatch } from "react-redux";
-
-const emotions = [
-  "contempt",
-  "fear",
-  "anger",
-  "shame",
-  "surprise",
-  "disgust",
-  "joy",
-  "distress",
-  "interest",
-  "guilt",
-];
+import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
 
 const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
   const [text, setText] = useState("");
-  const [selectedEmotion, setSelectedEmotion] = useState("");
+  const [selectedEmotion, setSelectedEmotion] = useState("contempt");
 
   const dispatch = useDispatch();
 
   const onClose = () => {
     setShowModal(!showModal);
-    setSelectedEmotion(emotions[0]);
+    setSelectedEmotion(emotions[0].value);
     setText("");
   };
   const onThink = async () => {
@@ -42,7 +30,7 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
     );
 
     setShowModal(false);
-    setSelectedEmotion(emotions[0]);
+    setSelectedEmotion(emotions[0].value);
     setText("");
   };
 
@@ -87,12 +75,29 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
               }
             >
               {emotions.map((emotion) => (
-                <Picker.Item key={emotion} label={emotion} value={emotion} />
+                <Picker.Item
+                  key={emotion}
+                  label={emotion.value}
+                  value={emotion.value}
+                />
               ))}
             </Picker>
           </View>
-          <Pressable style={styles.pressable} onPress={onThink}>
-            <Text style={{ fontSize: 24 }}>Think It Out Loud!</Text>
+          <Pressable
+            style={[
+              styles.pressable,
+              {
+                backgroundColor:
+                  emotions[indexOfEmotion(selectedEmotion)].color,
+              },
+            ]}
+            onPress={onThink}
+          >
+            <Text
+              style={{ fontSize: 24, color: emotionTextColor(selectedEmotion) }}
+            >
+              Think It Out Loud!
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -144,7 +149,6 @@ const styles = StyleSheet.create({
   pressable: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    backgroundColor: "#BCCEF8",
     borderRadius: 5,
   },
 });

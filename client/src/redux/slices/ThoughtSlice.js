@@ -16,6 +16,21 @@ export const getAllThoughts = createAsyncThunk(
   }
 );
 
+export const getThoughtsByUser = createAsyncThunk(
+  "thought/getByUser",
+  async (userId, thunkAPI) => {
+    try {
+      return await thoughtService.getThoughtsByUser(userId);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const createThought = createAsyncThunk(
   "thought/create",
   async (info, thunkAPI) => {
@@ -31,8 +46,24 @@ export const createThought = createAsyncThunk(
   }
 );
 
+export const deleteThought = createAsyncThunk(
+  "thought/delete",
+  async (id, thunkAPI) => {
+    try {
+      return await thoughtService.deleteThought(id);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   thoughts: [],
+  userThoughts: [],
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -58,6 +89,19 @@ export const thoughtSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      .addCase(getThoughtsByUser.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getThoughtsByUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.userThoughts = action.payload;
+      })
+      .addCase(getThoughtsByUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(createThought.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -65,8 +109,27 @@ export const thoughtSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.thoughts = [action.payload, ...current(state.thoughts)];
+        state.userThoughts = [action.payload, ...current(state.userThoughts)];
       })
       .addCase(createThought.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteThought.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteThought.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.thoughts = current(state.thoughts).filter(
+          (thought) => thought._id !== action.payload
+        );
+        state.userThoughts = current(state.userThoughts).filter(
+          (thought) => thought._id !== action.payload
+        );
+      })
+      .addCase(deleteThought.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

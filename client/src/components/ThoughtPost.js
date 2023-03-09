@@ -1,19 +1,25 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import emotions, { indexOfEmotion } from "../utils/emotions";
 
-const ThoughtPost = ({ thought }) => {
+const ThoughtPost = ({ thought, userPage }) => {
   const { id, text, emotion, userInfo } = thought;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { flex: userPage ? 2 : 1 }]}>
       <View style={styles.description}>
         <Text style={styles.text}>{text}</Text>
       </View>
       <View style={styles.footer}>
-        <AntDesign name="hearto" size={25} />
+        <AntDesign name="hearto" size={25} color="#777" />
         <View style={styles.icon_text}>
-          <View style={styles.emotion}></View>
+          <View
+            style={[
+              styles.emotion,
+              { backgroundColor: emotions[indexOfEmotion(emotion)].color },
+            ]}
+          ></View>
           <Text style={styles.text}>{emotion}</Text>
         </View>
         <View style={styles.icon_text}>
@@ -48,6 +54,7 @@ const styles = StyleSheet.create({
     height: 25,
     borderWidth: 2,
     borderRadius: 50,
+    borderColor: "#777",
   },
   icon_text: {
     flexDirection: "row",
@@ -55,6 +62,9 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   footer: {
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    paddingTop: 5,
     flexDirection: "row",
     justifyContent: "space-between",
   },

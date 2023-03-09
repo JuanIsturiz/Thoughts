@@ -1,9 +1,15 @@
 import axios from "axios";
+import IP from "../../constants/api";
 
-const API_URL = "http://192.168.0.135:5000/thought";
+const API_URL = `${IP}/thought`;
 
 const getAllThoughts = async () => {
   const response = await axios(API_URL);
+  return response.data;
+};
+
+const getThoughtsByUser = async (userId) => {
+  const response = await axios(`${API_URL}/user/${userId}`);
   return response.data;
 };
 
@@ -25,4 +31,14 @@ const createThought = async (info) => {
   return response.data;
 };
 
-export const thoughtService = { getAllThoughts, createThought };
+const deleteThought = async (id) => {
+  const response = await axios.delete(`${API_URL}/${id}`);
+  return response.data;
+};
+
+export const thoughtService = {
+  getAllThoughts,
+  getThoughtsByUser,
+  createThought,
+  deleteThought,
+};

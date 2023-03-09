@@ -23,6 +23,18 @@ exports.getById = asyncHandler(async (req, res) => {
   }
 });
 
+exports.getByUserId = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const thoughts = await Thought.find({ "userInfo.id": id });
+    res.json(thoughts);
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
+});
+
 exports.getByEmotion = asyncHandler(async (req, res) => {
   const { emotion } = req.params;
 
@@ -36,9 +48,7 @@ exports.getByEmotion = asyncHandler(async (req, res) => {
 });
 
 exports.addThought = asyncHandler(async (req, res) => {
-  console.log("add thought controller!");
   const { text, emotion, userId, username } = req.body;
-  console.log(req.body);
   if (!text) {
     res.status(400);
     throw new Error("Please add text to thought");
@@ -54,11 +64,9 @@ exports.addThought = asyncHandler(async (req, res) => {
       emotion,
       userInfo: { id: userId, username },
     });
-    console.log(newThought);
     res.status(201).json(newThought);
   } catch (err) {
     res.status(500);
-    console.log("ERROR!!!");
     throw new Error(err.message);
   }
 });
@@ -67,7 +75,7 @@ exports.deleteById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
     await Thought.findByIdAndDelete(id);
-    res.json({ id });
+    res.send(id);
   } catch (err) {
     res.status(500);
     throw new Error(err.message);

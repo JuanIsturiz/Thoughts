@@ -3,8 +3,9 @@ import {
   removeAsyncStorage,
   setAsyncStorage,
 } from "../../utils/asyncStorageHelper";
+import IP from "../../constants/api";
 
-const API_URL = "http://192.168.0.135:5000/user";
+const API_URL = `${IP}/user`;
 
 const register = async (userData) => {
   const response = await axios.post(`${API_URL}/register`, userData);

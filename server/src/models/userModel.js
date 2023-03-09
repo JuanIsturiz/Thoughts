@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add a password"],
     },
+    bio: {
+      type: String,
+      required: false,
+    },
     liked: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Thought",
