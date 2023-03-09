@@ -19,15 +19,13 @@ const thoughtsSchema = new mongoose.Schema(
       type: Date,
       default: new Date(),
     },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
+    userInfo: {
+      type: { id: mongoose.Schema.Types.ObjectId, username: String },
       required: true,
       ref: "User",
     },
   },
-  {
-    timestamps: true,
-  }
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Thought", thoughtsSchema);

@@ -36,9 +36,9 @@ exports.getByEmotion = asyncHandler(async (req, res) => {
 });
 
 exports.addThought = asyncHandler(async (req, res) => {
-  const { text, emotion } = req.body;
-  const userId = req.user.id;
-
+  console.log("add thought controller!");
+  const { text, emotion, userId, username } = req.body;
+  console.log(req.body);
   if (!text) {
     res.status(400);
     throw new Error("Please add text to thought");
@@ -49,15 +49,16 @@ exports.addThought = asyncHandler(async (req, res) => {
   }
 
   try {
-    const newThought = await Thought.create({ text, emotion, userId });
-    res.status(201).json({
-      id: newThought._id,
-      text: newThought.text,
-      emotion: newThought.emotion,
-      userId,
+    const newThought = await Thought.create({
+      text,
+      emotion,
+      userInfo: { id: userId, username },
     });
+    console.log(newThought);
+    res.status(201).json(newThought);
   } catch (err) {
     res.status(500);
+    console.log("ERROR!!!");
     throw new Error(err.message);
   }
 });

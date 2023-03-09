@@ -34,7 +34,11 @@ module.exports.register = asyncHandler(async (req, res) => {
   const hashPassword = await bcrypt.hash(password, salt);
 
   // create user
-  const user = await User.create({ username, email, password: hashPassword });
+  const user = await User.create({
+    username,
+    email: email.toLowerCase(),
+    password: hashPassword,
+  });
 
   if (user) {
     res.status(201).json({
@@ -58,7 +62,7 @@ module.exports.login = asyncHandler(async (req, res) => {
   }
 
   // user data
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email.toLowerCase() });
 
   if (!user) {
     res.status(400);

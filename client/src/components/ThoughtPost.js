@@ -2,21 +2,23 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const ThoughtPost = () => {
+const ThoughtPost = ({ thought }) => {
+  const { id, text, emotion, userInfo } = thought;
+
   return (
     <View style={styles.container}>
       <View style={styles.description}>
-        <Text style={styles.text}>Sample Tought Text...</Text>
+        <Text style={styles.text}>{text}</Text>
       </View>
       <View style={styles.footer}>
         <AntDesign name="hearto" size={25} />
         <View style={styles.icon_text}>
           <View style={styles.emotion}></View>
-          <Text style={styles.text}>Sample Emotion</Text>
+          <Text style={styles.text}>{emotion}</Text>
         </View>
         <View style={styles.icon_text}>
           <AntDesign name="user" size={25} color="#98A8F8" />
-          <Text style={styles.text}>Sample User</Text>
+          <Text style={styles.text}>{userInfo.username}</Text>
         </View>
       </View>
     </View>

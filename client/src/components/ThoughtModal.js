@@ -3,6 +3,8 @@ import { StyleSheet, TextInput } from "react-native";
 import { Modal, View, Text, Pressable } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Picker } from "@react-native-picker/picker";
+import { createThought } from "../redux/slices/ThoughtSlice";
+import { useDispatch } from "react-redux";
 
 const emotions = [
   "contempt",
@@ -17,12 +19,30 @@ const emotions = [
   "guilt",
 ];
 
-const ThoughtModal = ({ showModal, setShowModal }) => {
+const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
   const [text, setText] = useState("");
-  const [selectedEmotion, setSelectedEmotion] = useState("contempt");
+  const [selectedEmotion, setSelectedEmotion] = useState("");
+
+  const dispatch = useDispatch();
 
   const onClose = () => {
     setShowModal(!showModal);
+    setSelectedEmotion(emotions[0]);
+    setText("");
+  };
+  const onThink = async () => {
+    await dispatch(
+      createThought({
+        text,
+        emotion: selectedEmotion,
+        userId: userInfo.id,
+        username: userInfo.username,
+        token: userInfo.token,
+      })
+    );
+
+    setShowModal(false);
+    setSelectedEmotion(emotions[0]);
     setText("");
   };
 
@@ -61,7 +81,7 @@ const ThoughtModal = ({ showModal, setShowModal }) => {
           <View style={styles.picker}>
             <Picker
               itemStyle={{ fontSize: 16 }}
-              selectedEmotion={selectedEmotion}
+              selectedValue={selectedEmotion}
               onValueChange={(emotiomValue, itemIndex) =>
                 setSelectedEmotion(emotiomValue)
               }
@@ -71,7 +91,7 @@ const ThoughtModal = ({ showModal, setShowModal }) => {
               ))}
             </Picker>
           </View>
-          <Pressable style={styles.pressable}>
+          <Pressable style={styles.pressable} onPress={onThink}>
             <Text style={{ fontSize: 24 }}>Think It Out Loud!</Text>
           </Pressable>
         </View>

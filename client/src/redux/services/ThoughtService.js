@@ -8,17 +8,17 @@ const getAllThoughts = async () => {
 };
 
 const createThought = async (info) => {
-  const { text, emotion, userId, token } = info;
+  const { text, emotion, userId, username, token } = info;
 
   const config = {
     headers: {
-      authentication: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
   const response = await axios.post(
-    `${API_URL}`,
-    { text, emotion, userId },
+    API_URL,
+    { text, emotion, userId, username },
     config
   );
 

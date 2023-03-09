@@ -45,13 +45,26 @@ export const thoughtSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getAllThoughts.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllThoughts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.thoughts = action.payload;
+      })
+      .addCase(getAllThoughts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(createThought.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(createThought.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        current(state.thoughts).push(action.payload);
+        state.thoughts = [action.payload, ...current(state.thoughts)];
       })
       .addCase(createThought.rejected, (state, action) => {
         state.isLoading = false;
