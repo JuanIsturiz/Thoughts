@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
-import { Modal, View, Text, Pressable } from "react-native";
+import {
+  Modal,
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Picker } from "@react-native-picker/picker";
 import { createThought } from "../redux/slices/ThoughtSlice";
@@ -46,9 +52,9 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
     >
       <View style={styles.container}>
         <View style={styles.close}>
-          <Pressable onPress={onClose}>
+          <TouchableOpacity onPress={onClose}>
             <AntDesign name="close" color="#000" size={30} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={styles.main}>
           <Text style={{ fontSize: 16, marginBottom: 5 }}>
@@ -83,7 +89,7 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
               ))}
             </Picker>
           </View>
-          <Pressable
+          <TouchableOpacity
             style={[
               styles.pressable,
               {
@@ -98,7 +104,7 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
             >
               Think It Out Loud!
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -149,6 +155,8 @@ const styles = StyleSheet.create({
   pressable: {
     paddingVertical: 10,
     paddingHorizontal: 5,
+    borderWidth: 1,
+    borderColor: "#777",
     borderRadius: 5,
   },
 });

@@ -1,15 +1,14 @@
 import React from "react";
-import { Pressable } from "react-native";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import EntyPo from "@expo/vector-icons/Entypo";
 
 const Header = ({ onModal }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thoughts</Text>
-      <Pressable onPress={onModal}>
+      <TouchableOpacity onPress={onModal}>
         <EntyPo name="squared-plus" size={60} color="#BCCEF8" />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

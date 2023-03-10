@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/AuthSlice";
 
@@ -46,9 +52,9 @@ const SignInForm = () => {
         />
       </View>
       <View style={{ alignItems: "center", marginBottom: 50 }}>
-        <Pressable style={styles.pressable} onPress={signIn}>
+        <TouchableOpacity style={styles.pressable} onPress={signIn}>
           <Text style={{ fontSize: 28, fontWeight: "300" }}>Log In</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <View style={{ alignItems: "center" }}>
         <Text
@@ -60,9 +66,12 @@ const SignInForm = () => {
         >
           Does not have an account?
         </Text>
-        <Pressable style={styles.pressable} onPress={() => navigate("Sign Up")}>
+        <TouchableOpacity
+          style={styles.pressable}
+          onPress={() => navigate("Sign Up")}
+        >
           <Text style={{ fontSize: 24, fontWeight: "300" }}>Go to Sign Up</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </>
   );

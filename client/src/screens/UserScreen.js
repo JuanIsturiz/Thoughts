@@ -1,5 +1,5 @@
 import { ScrollView } from "react-native";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { useDispatch, useSelector } from "react-redux";
 import LogoutButton from "../components/LogoutButton";
@@ -37,9 +37,9 @@ const UserScreen = () => {
           <Text style={{ fontSize: 32 }}>
             {user ? user.username : "Sample User"}
           </Text>
-          <Pressable onPress={() => console.log(123)}>
+          <TouchableOpacity onPress={() => console.log(123)}>
             <Feather name="settings" size={30} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={styles.description}>
           <Text style={{ fontSize: 18 }}>Sample user bio...</Text>
@@ -54,12 +54,13 @@ const UserScreen = () => {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
+                  gap: 10,
                 }}
               >
                 <ThoughtPost thought={thought} userPage={true} />
-                <Pressable onPress={() => onDelete(thought._id)}>
+                <TouchableOpacity onPress={() => onDelete(thought._id)}>
                   <Feather name="trash" color="red" size={30} />
-                </Pressable>
+                </TouchableOpacity>
               </View>
             ))
           ) : (

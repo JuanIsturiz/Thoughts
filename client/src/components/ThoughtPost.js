@@ -2,30 +2,43 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import emotions, { indexOfEmotion } from "../utils/emotions";
+import { formatDistance } from "date-fns";
 
 const ThoughtPost = ({ thought, userPage }) => {
-  const { id, text, emotion, userInfo } = thought;
+  const { id, text, emotion, userInfo, createdAt } = thought;
 
   return (
     <View style={[styles.container, { flex: userPage ? 2 : 1 }]}>
       <View style={styles.description}>
-        <Text style={styles.text}>{text}</Text>
+        <Text
+          style={{
+            fontSize: 18,
+          }}
+        >
+          {text}
+        </Text>
       </View>
-      <View style={styles.footer}>
-        <AntDesign name="hearto" size={25} color="#777" />
+      <View
+        style={[
+          styles.footer,
+          { backgroundColor: emotions[indexOfEmotion(emotion)].color },
+        ]}
+      >
+        <AntDesign name="hearto" size={25} color="#333" />
+        <Text style={[styles.text, { textTransform: "capitalize" }]}>
+          {formatDistance(new Date(createdAt), new Date(), { addSuffix: true })}
+        </Text>
         <View style={styles.icon_text}>
-          <View
-            style={[
-              styles.emotion,
-              { backgroundColor: emotions[indexOfEmotion(emotion)].color },
-            ]}
-          ></View>
-          <Text style={styles.text}>{emotion}</Text>
+          <Text style={[styles.text, { textTransform: "capitalize" }]}>
+            {emotion}
+          </Text>
         </View>
-        <View style={styles.icon_text}>
-          <AntDesign name="user" size={25} color="#98A8F8" />
-          <Text style={styles.text}>{userInfo.username}</Text>
-        </View>
+        {!userPage && (
+          <View style={styles.icon_text}>
+            <AntDesign name="user" size={25} color="#333" />
+            <Text style={styles.text}>{userInfo.username}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -33,9 +46,8 @@ const ThoughtPost = ({ thought, userPage }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    // padding: 10,
     marginVertical: 10,
-    marginHorizontal: 15,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
@@ -44,9 +56,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
   },
   description: {
+    padding: 10,
+    paddingBottom: 0,
     marginBottom: 10,
   },
   emotion: {
@@ -54,19 +68,23 @@ const styles = StyleSheet.create({
     height: 25,
     borderWidth: 2,
     borderRadius: 50,
-    borderColor: "#777",
+    borderColor: "#333",
   },
   icon_text: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
+    gap: 4,
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: "#ddd",
-    paddingTop: 5,
+    borderTopColor: "#555",
+    paddingVertical: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
