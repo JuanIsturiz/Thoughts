@@ -11,6 +11,7 @@ const {
 } = require("../controllers/thoughtController");
 
 const authenticate = require("../middleware/auth");
+const thoughtModel = require("../models/thoughtModel");
 
 // get all thoughts
 thoughtRouter.get("/", getAll);
@@ -22,7 +23,7 @@ thoughtRouter.get("/:id", getById);
 thoughtRouter.get("/user/:id", getByUserId);
 
 // get get thoughts by emotion
-thoughtRouter.get("/:emotion", getByEmotion);
+thoughtRouter.get("/search/:emotion", getByEmotion);
 
 // add new thought
 thoughtRouter.post("/", authenticate, addThought);
@@ -32,5 +33,11 @@ thoughtRouter.delete("/:id", deleteById);
 
 // update thought by id
 thoughtRouter.put("/:id", updateById);
+
+// thoughtRouter.get("/reset", async (req, res) => {
+//   await thoughtModel.updateMany({}, { likes: [] });
+//   const si = await thoughtModel.find();
+//   res.json(si);
+// });
 
 module.exports = thoughtRouter;

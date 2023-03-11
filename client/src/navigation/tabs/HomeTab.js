@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FeedScreen from "../../screens/FeedScreen";
-import SearchScreen from "../../screens/SearchScreen";
+// import SearchScreen from "../../screens/SearchScreen";
 import UserScreen from "../../screens/UserScreen";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import SearchNavigator from "../stacks/SearchStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ export default function HomeNavigator() {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Fontisto name="zoom" color={color} size={30} />

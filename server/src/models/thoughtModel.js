@@ -11,7 +11,7 @@ const thoughtsSchema = new mongoose.Schema(
       required: true, //todo change to false
     },
     likes: {
-      type: [{ userId: mongoose.Schema.Types.ObjectId }],
+      type: [mongoose.Schema.Types.ObjectId],
       required: false,
       ref: "User",
     },

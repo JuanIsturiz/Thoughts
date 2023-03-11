@@ -1,14 +1,66 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import emotions, { indexOfEmotion } from "../utils/emotions";
+import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
 import { formatDistance } from "date-fns";
+import Heart from "../icons/Heart";
+import { useDispatch, useSelector } from "react-redux";
+import { likeThought } from "../redux/slices/ThoughtSlice";
 
 const ThoughtPost = ({ thought, userPage }) => {
-  const { id, text, emotion, userInfo, createdAt } = thought;
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { _id, text, emotion, userInfo, createdAt, likes } = thought;
+  const [liked, setLiked] = useState(false);
+  const animatedValue = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      useNativeDriver: true,
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+    }).start();
+
+    if (likes.some((id) => id === user.id)) {
+      setLiked(true);
+    }
+  }, []);
+
+  const onLike = () => {
+    dispatch(
+      likeThought({
+        id: _id,
+        userId: user.id,
+        action: liked ? "unlike" : "like",
+      })
+    ).then((res) => {
+      if (res.payload.action === "like") {
+        setLiked(true);
+      } else if (res.payload.action === "unlike") {
+        setLiked(false);
+      }
+    });
+  };
 
   return (
-    <View style={[styles.container, { flex: userPage ? 2 : 1 }]}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          flex: userPage ? 2 : 1,
+          opacity: animatedValue,
+          transform: [{ scale: animatedValue }],
+        },
+      ]}
+    >
       <View style={styles.description}>
         <Text
           style={{
@@ -24,29 +76,50 @@ const ThoughtPost = ({ thought, userPage }) => {
           { backgroundColor: emotions[indexOfEmotion(emotion)].color },
         ]}
       >
-        <AntDesign name="hearto" size={25} color="#333" />
-        <Text style={[styles.text, { textTransform: "capitalize" }]}>
+        <TouchableOpacity onPress={onLike}>
+          <Heart
+            fill={liked}
+            strokeColor={emotion === "fear" ? "#777" : "#333"}
+          />
+        </TouchableOpacity>
+
+        <Text
+          style={[
+            styles.text,
+            { textTransform: "capitalize", color: emotionTextColor(emotion) },
+          ]}
+        >
           {formatDistance(new Date(createdAt), new Date(), { addSuffix: true })}
         </Text>
         <View style={styles.icon_text}>
-          <Text style={[styles.text, { textTransform: "capitalize" }]}>
+          <Text
+            style={[
+              styles.text,
+              { textTransform: "capitalize", color: emotionTextColor(emotion) },
+            ]}
+          >
             {emotion}
           </Text>
         </View>
         {!userPage && (
           <View style={styles.icon_text}>
-            <AntDesign name="user" size={25} color="#333" />
-            <Text style={styles.text}>{userInfo.username}</Text>
+            <AntDesign
+              name="user"
+              size={25}
+              color={emotion === "fear" ? "#777" : "#333"}
+            />
+            <Text style={[styles.text, { color: emotionTextColor(emotion) }]}>
+              {userInfo.username}
+            </Text>
           </View>
         )}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 10,
     marginVertical: 10,
     backgroundColor: "#fff",
     shadowColor: "#000",

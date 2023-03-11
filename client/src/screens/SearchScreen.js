@@ -1,28 +1,32 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Searchbar from "../components/Searchbar";
-
-const emotions = [
-  "contempt",
-  "fear",
-  "anger",
-  "shame",
-  "surprise",
-  "disgust",
-  "joy",
-  "distress",
-  "interest",
-  "guilt",
-];
+import { setSearchParam } from "../redux/slices/ThoughtSlice";
+import emotions from "../utils/emotions";
 
 const SearchScreen = () => {
+  const dispatch = useDispatch();
+  const { searchParam } = useSelector((state) => state.thought);
+
+  const onEmotion = (emotion) => {
+    if (searchParam.includes(emotion)) return;
+    dispatch(setSearchParam({ text: `#${emotion}`, touchable: true }));
+  };
   return (
     <View style={styles.container}>
       <Searchbar />
       <View style={styles.wrapper}>
         {emotions.map((e) => (
-          <View key={e} style={styles.emotion}>
-            <Text style={styles.text}>#{e}</Text>
-          </View>
+          <TouchableOpacity
+            key={e.value}
+            style={[
+              styles.emotion,
+              { opacity: searchParam.includes(`#${e.value}`) ? 0.5 : 1 },
+            ]}
+            onPress={() => onEmotion(e.value)}
+          >
+            <Text style={styles.text}>#{e.value}</Text>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

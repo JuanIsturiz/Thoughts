@@ -59,7 +59,7 @@ const UserScreen = () => {
               >
                 <ThoughtPost thought={thought} userPage={true} />
                 <TouchableOpacity onPress={() => onDelete(thought._id)}>
-                  <Feather name="trash" color="red" size={30} />
+                  <Feather name="trash" color="#FF5C5C" size={30} />
                 </TouchableOpacity>
               </View>
             ))

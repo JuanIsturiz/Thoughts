@@ -31,6 +31,21 @@ export const getThoughtsByUser = createAsyncThunk(
   }
 );
 
+export const getThoughtsByEmotion = createAsyncThunk(
+  "thought/getByUser",
+  async (info, thunkAPI) => {
+    try {
+      return await thoughtService.getThoughtsByEmotion(info);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const createThought = createAsyncThunk(
   "thought/create",
   async (info, thunkAPI) => {
@@ -61,8 +76,24 @@ export const deleteThought = createAsyncThunk(
   }
 );
 
+export const likeThought = createAsyncThunk(
+  "thought/like",
+  async (info, thunkAPI) => {
+    try {
+      return await thoughtService.likeThought(info);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   thoughts: [],
+  searchParam: "",
   userThoughts: [],
   isSuccess: false,
   isLoading: false,
@@ -73,7 +104,15 @@ const initialState = {
 export const thoughtSlice = createSlice({
   name: "thoughts",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchParam: (state, action) => {
+      if (action.payload.touchable) {
+        state.searchParam = state.searchParam + " " + action.payload.text;
+      } else {
+        state.searchParam = action.payload.text;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllThoughts.pending, (state, action) => {
@@ -133,8 +172,49 @@ export const thoughtSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(likeThought.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(likeThought.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+
+        if (action.payload.action === "like") {
+          state.thoughts = current(state.thoughts).map((thought) => {
+            if (thought._id === action.payload.id) {
+              return {
+                ...thought,
+                likes: [action.payload.userId, ...thought.likes],
+              };
+            } else {
+              return thought;
+            }
+          });
+        }
+        if (action.payload.action === "unlike") {
+          state.thoughts = current(state.thoughts).map((thought) => {
+            if (thought._id === action.payload.id) {
+              return {
+                ...thought,
+                likes: thought.likes.filter(
+                  (id) => id !== action.payload.userId
+                ),
+              };
+            } else {
+              return thought;
+            }
+          });
+        }
+      })
+      .addCase(likeThought.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
+
+export const { setSearchParam } = thoughtSlice.actions;
 
 export default thoughtSlice.reducer;

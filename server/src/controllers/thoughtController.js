@@ -3,7 +3,7 @@ const Thought = require("../models/thoughtModel");
 
 exports.getAll = asyncHandler(async (req, res) => {
   try {
-    const thoughts = await Thought.find();
+    const thoughts = await Thought.find().sort({ createdAt: -1 });
     res.json(thoughts);
   } catch (err) {
     res.status(500);
@@ -62,6 +62,7 @@ exports.addThought = asyncHandler(async (req, res) => {
     const newThought = await Thought.create({
       text,
       emotion,
+      createdAt: new Date(),
       userInfo: { id: userId, username },
     });
     res.status(201).json(newThought);
@@ -87,15 +88,23 @@ exports.updateById = asyncHandler(async (req, res) => {
   const { userId, action } = req.body;
 
   if (action === "like") {
-    await Thought.findByIdAndUpdate(id, { $push: { likes: { userId } } });
-    res.json({ id, userId });
+    const query = await Thought.findById(id).select({ likes: 1, _id: -1 });
+    const likes = query.likes.map((like) =>
+      like.substring(14).substring(0, 24)
+    );
+
+    if (likes.some((like) => like === userId)) {
+      res.status(400);
+      throw new Error("User already included in likes");
+    }
+    await Thought.findByIdAndUpdate(id, { $push: { likes: userId } });
   }
 
   if (action === "unlike") {
-    await Thought.findByIdAndUpdate(id, { $pull: { likes: { userId } } });
-    res.json({ id, userId });
+    await Thought.findByIdAndUpdate(id, { $pull: { likes: userId } });
   }
 
+  res.json({ id, userId, action });
   try {
   } catch (err) {
     res.status(500);
