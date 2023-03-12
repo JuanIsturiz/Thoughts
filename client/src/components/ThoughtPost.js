@@ -20,7 +20,6 @@ const ThoughtPost = ({ thought, userPage }) => {
   const { _id, text, emotion, userInfo, createdAt, likes } = thought;
   const [liked, setLiked] = useState(false);
   const animatedValue = useState(new Animated.Value(0))[0];
-
   useEffect(() => {
     Animated.timing(animatedValue, {
       useNativeDriver: true,

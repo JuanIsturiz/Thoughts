@@ -32,10 +32,25 @@ export const getThoughtsByUser = createAsyncThunk(
 );
 
 export const getThoughtsByEmotion = createAsyncThunk(
-  "thought/getByUser",
+  "thought/getByEmotion",
   async (info, thunkAPI) => {
     try {
       return await thoughtService.getThoughtsByEmotion(info);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getThoughtsByUsername = createAsyncThunk(
+  "thought/getByUsername",
+  async (username, thunkAPI) => {
+    try {
+      return await thoughtService.getThoughtsByUsername(username);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -95,6 +110,7 @@ const initialState = {
   thoughts: [],
   searchParam: "",
   userThoughts: [],
+  searchThoughts: [],
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -111,6 +127,9 @@ export const thoughtSlice = createSlice({
       } else {
         state.searchParam = action.payload.text;
       }
+    },
+    resetSearchThoughts: (state, action) => {
+      state.searchThoughts = [];
     },
   },
   extraReducers: (builder) => {
@@ -137,6 +156,32 @@ export const thoughtSlice = createSlice({
         state.userThoughts = action.payload;
       })
       .addCase(getThoughtsByUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getThoughtsByEmotion.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getThoughtsByEmotion.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.searchThoughts = action.payload;
+      })
+      .addCase(getThoughtsByEmotion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getThoughtsByUsername.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getThoughtsByUsername.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.searchThoughts = action.payload;
+      })
+      .addCase(getThoughtsByUsername.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -215,6 +260,6 @@ export const thoughtSlice = createSlice({
   },
 });
 
-export const { setSearchParam } = thoughtSlice.actions;
+export const { setSearchParam, resetSearchThoughts } = thoughtSlice.actions;
 
 export default thoughtSlice.reducer;

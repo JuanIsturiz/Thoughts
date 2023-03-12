@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchNavigator from "../stacks/SearchStack";
+import UserNavigator from "../stacks/userStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,7 @@ export default function HomeNavigator() {
       />
       <Tab.Screen
         name="User"
-        component={UserScreen}
+        component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="user" color={color} size={30} />

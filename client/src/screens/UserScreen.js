@@ -2,12 +2,13 @@ import { ScrollView } from "react-native";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { useDispatch, useSelector } from "react-redux";
-import LogoutButton from "../components/LogoutButton";
 import ThoughtPost from "../components/ThoughtPost";
 import { deleteThought, getThoughtsByUser } from "../redux/slices/ThoughtSlice";
 import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const UserScreen = () => {
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { userThoughts } = useSelector((state) => state.thought);
@@ -24,7 +25,6 @@ const UserScreen = () => {
       <View style={styles.header}>
         <Text style={styles.header_title}>Profile</Text>
       </View>
-      <LogoutButton />
       <View style={styles.user_info}>
         <View
           style={{
@@ -37,7 +37,7 @@ const UserScreen = () => {
           <Text style={{ fontSize: 32 }}>
             {user ? user.username : "Sample User"}
           </Text>
-          <TouchableOpacity onPress={() => console.log(123)}>
+          <TouchableOpacity onPress={() => navigate("Configuration")}>
             <Feather name="settings" size={30} />
           </TouchableOpacity>
         </View>

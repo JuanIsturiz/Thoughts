@@ -25,9 +25,10 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
     setText("");
   };
   const onThink = async () => {
+    if (!text) return;
     await dispatch(
       createThought({
-        text,
+        text: text.trim(),
         emotion: selectedEmotion,
         userId: userInfo.id,
         username: userInfo.username,
@@ -46,7 +47,6 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
       visible={showModal}
       transparent={true}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         setShowModal(!showModal);
       }}
     >

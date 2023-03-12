@@ -16,8 +16,7 @@ const getThoughtsByUser = async (userId) => {
 const getThoughtsByEmotion = async (info) => {
   const { multiple, emotion } = info;
 
-  const url = `${API_URL}/emotion?multiple=${multiple}&emotions=`;
-  //TODO catch query in controller and return thoughts depending on multiple value and add case in slice
+  const url = `${API_URL}/search/emotion?multiple=${multiple}&emotion=`;
   let query = "";
 
   if (multiple) {
@@ -26,13 +25,20 @@ const getThoughtsByEmotion = async (info) => {
         query += emotion;
         return;
       }
-      query += `&${emotion}`;
+      query += `&emotion=${emotion}`;
     });
   } else {
     query = emotion;
   }
+
   const response = await axios(url + query);
-  return 123;
+  return response.data;
+};
+
+const getThoughtsByUsername = async (username) => {
+  const url = `${API_URL}/search/username?username=${username}`;
+  const response = await axios(url);
+  return response.data;
 };
 
 const createThought = async (info) => {
@@ -68,6 +74,7 @@ export const thoughtService = {
   getAllThoughts,
   getThoughtsByUser,
   getThoughtsByEmotion,
+  getThoughtsByUsername,
   createThought,
   deleteThought,
   likeThought,

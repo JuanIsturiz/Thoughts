@@ -36,11 +36,30 @@ exports.getByUserId = asyncHandler(async (req, res) => {
 });
 
 exports.getByEmotion = asyncHandler(async (req, res) => {
-  const { emotion } = req.params;
-
+  const multiple = req.query.multiple === "true";
   try {
-    const thoughts = await Thought.find({ emotion });
-    res.json({ thoughts });
+    const thoughts = [];
+    if (!multiple) {
+      const innerThoughts = await Thought.find({ emotion: req.query.emotion });
+      thoughts.push(...innerThoughts);
+    } else {
+      for (const emotion of req.query.emotion) {
+        const innerThoughts = await Thought.find({ emotion });
+        thoughts.push(...innerThoughts);
+      }
+    }
+    res.json(thoughts);
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
+});
+
+exports.getByUsername = asyncHandler(async (req, res) => {
+  const { username } = req.query;
+  try {
+    const thoughts = await Thought.find({ "userInfo.username": username });
+    res.json(thoughts);
   } catch (err) {
     res.status(500);
     throw new Error(err.message);

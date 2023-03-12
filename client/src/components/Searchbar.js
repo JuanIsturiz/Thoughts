@@ -11,10 +11,19 @@ const Searchbar = () => {
   const { navigate } = useNavigation();
   const onSubmit = () => {
     if (searchParam === "") return;
-    navigate("Emotion", {
-      emotion: searchParam.trim(),
-      multiple: searchParam.trim().includes(" "),
-    });
+    if (searchParam.includes("#") && searchParam.includes("@")) {
+      console.log("invalid searchParam");
+      return;
+    }
+    if (searchParam.includes("#")) {
+      navigate("Emotion", {
+        emotion: searchParam.trim(),
+        multiple: searchParam.trim().includes(" "),
+      });
+    }
+    if (searchParam.includes("@")) {
+      navigate("User", { username: searchParam.trim() });
+    }
     dispatch(setSearchParam({ text: "" }));
   };
   return (

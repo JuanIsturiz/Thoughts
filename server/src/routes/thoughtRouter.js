@@ -8,6 +8,7 @@ const {
   deleteById,
   updateById,
   getByUserId,
+  getByUsername,
 } = require("../controllers/thoughtController");
 
 const authenticate = require("../middleware/auth");
@@ -23,7 +24,10 @@ thoughtRouter.get("/:id", getById);
 thoughtRouter.get("/user/:id", getByUserId);
 
 // get get thoughts by emotion
-thoughtRouter.get("/search/:emotion", getByEmotion);
+thoughtRouter.get("/search/emotion", getByEmotion);
+
+// get get thoughts by username
+thoughtRouter.get("/search/username", getByUsername);
 
 // add new thought
 thoughtRouter.post("/", authenticate, addThought);
@@ -33,11 +37,5 @@ thoughtRouter.delete("/:id", deleteById);
 
 // update thought by id
 thoughtRouter.put("/:id", updateById);
-
-// thoughtRouter.get("/reset", async (req, res) => {
-//   await thoughtModel.updateMany({}, { likes: [] });
-//   const si = await thoughtModel.find();
-//   res.json(si);
-// });
 
 module.exports = thoughtRouter;
