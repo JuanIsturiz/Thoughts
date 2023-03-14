@@ -3,11 +3,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
+const Thought = require("../models/thoughtModel");
 
 // @desc    Register user
 // @route   POST /api/users
 // @access  Private
-module.exports.register = asyncHandler(async (req, res) => {
+exports.register = asyncHandler(async (req, res) => {
   const { username, email, password, password2 } = req.body;
 
   // inputs check
@@ -53,7 +54,10 @@ module.exports.register = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports.login = asyncHandler(async (req, res) => {
+// @desc    Login user
+// @route   POST /api/users
+// @access  Private
+exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // inputs check
   if (!email || !password) {
@@ -82,6 +86,41 @@ module.exports.login = asyncHandler(async (req, res) => {
     email: user.email,
     token: generateToken(user._id),
   });
+});
+
+// @desc    Register user
+// @route   POST /api/users
+// @access  Private
+exports.update = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { token, changes } = req.body;
+
+  let newUser;
+  if ("password" in changes) {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(changes.password, salt);
+    newUser = await User.findByIdAndUpdate(
+      id,
+      { password: hashPassword },
+      { new: true }
+    );
+  } else if ("username" in changes) {
+    newUser = await User.findByIdAndUpdate(id, changes, { new: true });
+    await Thought.updateMany(
+      { "userInfo.id": id },
+      { "userInfo.username": changes.username }
+    );
+  } else {
+    newUser = await User.findByIdAndUpdate(id, changes, { new: true });
+  }
+
+  const user = {
+    id: newUser._id,
+    username: newUser.username,
+    email: newUser.email,
+    token,
+  };
+  res.json(user);
 });
 
 // Generate JWT

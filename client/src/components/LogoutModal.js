@@ -28,7 +28,7 @@ const LogoutModal = ({ showModal, setShowModal }) => {
           style={[styles.touchable, { backgroundColor: "#CCC" }]}
           onPress={() => setShowModal(false)}
         >
-          <Text style={{ fontSize: 26, color: "#FFF" }}>Chancel</Text>
+          <Text style={{ fontSize: 26, color: "#FFF" }}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </Modal>

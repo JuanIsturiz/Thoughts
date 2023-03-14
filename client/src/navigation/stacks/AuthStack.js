@@ -12,9 +12,21 @@ export default function AuthNavigator() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Main"
     >
-      <Stack.Screen name="Main" component={MainScreen} />
-      <Stack.Screen name="Sign Up" component={SignUpScreen} />
-      <Stack.Screen name="Sign In" component={SignInScreen} />
+      <Stack.Screen
+        name="Main"
+        component={MainScreen}
+        options={{ headerTitle: "Main" }}
+      />
+      <Stack.Screen
+        name="Sign Up"
+        component={SignUpScreen}
+        options={{ headerTitle: "Sign Up" }}
+      />
+      <Stack.Screen
+        name="Sign In"
+        component={SignInScreen}
+        options={{ headerTitle: "Sign In" }}
+      />
     </Stack.Navigator>
   );
 }

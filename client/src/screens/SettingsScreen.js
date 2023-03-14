@@ -2,28 +2,33 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import LogoutModal from "../components/LogoutModal";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 const SettingsScreen = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const { navigate } = useNavigation();
+  const { user } = useSelector((state) => state.auth);
   return (
     <View style={styles.container}>
       <LogoutModal showModal={showModal} setShowModal={setShowModal} />
       <View style={styles.section}>
         <Text style={styles.section_title}>Account</Text>
         <View>
-          <View style={styles.option}>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => navigate("Account", { user })}
+          >
             <Text style={styles.option_title}>Account</Text>
-            <TouchableOpacity>
-              <Entypo name="chevron-right" size={32} color="#222" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.option}>
+            <Entypo name="chevron-right" size={32} color="#222" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => navigate("Share Profile", { user })}
+          >
             <Text style={styles.option_title}>Share Profile</Text>
-            <TouchableOpacity>
-              <Entypo name="chevron-right" size={32} color="#222" />
-            </TouchableOpacity>
-          </View>
+            <Entypo name="chevron-right" size={32} color="#222" />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.section}>

@@ -1,12 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FeedScreen from "../../screens/FeedScreen";
-// import SearchScreen from "../../screens/SearchScreen";
-import UserScreen from "../../screens/UserScreen";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchNavigator from "../stacks/SearchStack";
-import UserNavigator from "../stacks/userStack";
+import UserNavigator from "../stacks/UserStack";
 
 const Tab = createBottomTabNavigator();
 

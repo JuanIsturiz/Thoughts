@@ -13,7 +13,6 @@ const EmotionSearchScreen = ({ route }) => {
   const dispatch = useDispatch();
   const { searchThoughts } = useSelector((state) => state.thought);
   const { emotion, multiple } = route.params;
-  console.log(route.params);
   useEffect(() => {
     const emotionArray = emotion
       .trim()

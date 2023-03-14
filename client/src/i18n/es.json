@@ -1,0 +1,43 @@
+{
+  "SCREENS": {},
+  "account": {
+    "update_password": "Actualizar Contraseña",
+    "username_input": "usuario",
+    "email_input": "correo",
+    "username_placeholder": "Por favor escribe tu usuario",
+    "email_placeholder": "Por favor escribe tu correo"
+  },
+  "display": {},
+  "emotion_search": {},
+  "user_search": {},
+  "feed": {},
+  "main": {
+    "made-by": "Por Juan Isturiz"
+  },
+  "search": {},
+  "settings": {},
+  "share_profile": {},
+  "sign_in": {},
+  "sign_up": {},
+  "user": {},
+  "COMPONENTS": {},
+  "editable": {},
+  "header": {},
+  "language_form": {},
+  "logout_modal": {},
+  "password_modal": {},
+  "searchbar": {},
+  "signin_form": {},
+  "signup_form": {},
+  "theme_form": {},
+  "thought_modal": {},
+  "thought_post": {},
+  "NAVIGATION": {},
+  "STACKS": {},
+  "auth_stack": {},
+  "search_stack": {},
+  "settings_stack": {},
+  "user_stack": {},
+  "TABS": {},
+  "home_tab": {}
+}

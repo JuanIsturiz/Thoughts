@@ -1,4 +1,4 @@
-const thoughtRouter = require("express").Router();
+const router = require("express").Router();
 
 const {
   getAll,
@@ -12,30 +12,29 @@ const {
 } = require("../controllers/thoughtController");
 
 const authenticate = require("../middleware/auth");
-const thoughtModel = require("../models/thoughtModel");
 
 // get all thoughts
-thoughtRouter.get("/", getAll);
+router.get("/", getAll);
 
 // get thought by id
-thoughtRouter.get("/:id", getById);
+router.get("/:id", getById);
 
 // get thought by user id
-thoughtRouter.get("/user/:id", getByUserId);
+router.get("/user/:id", getByUserId);
 
 // get get thoughts by emotion
-thoughtRouter.get("/search/emotion", getByEmotion);
+router.get("/search/emotion", getByEmotion);
 
 // get get thoughts by username
-thoughtRouter.get("/search/username", getByUsername);
+router.get("/search/username", getByUsername);
 
 // add new thought
-thoughtRouter.post("/", authenticate, addThought);
+router.post("/", authenticate, addThought);
 
 // delete thought by id
-thoughtRouter.delete("/:id", deleteById);
+router.delete("/:id", deleteById);
 
 // update thought by id
-thoughtRouter.put("/:id", updateById);
+router.put("/:id", updateById);
 
-module.exports = thoughtRouter;
+module.exports = router;

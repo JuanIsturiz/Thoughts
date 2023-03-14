@@ -6,7 +6,7 @@ import ThoughtPost from "../components/ThoughtPost";
 import { deleteThought, getThoughtsByUser } from "../redux/slices/ThoughtSlice";
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-
+//TODO fix user thoughts scroll, modal position (DIMENSIONS) and like bug on new thought, ADD BIO
 const UserScreen = () => {
   const { navigate } = useNavigation();
   const dispatch = useDispatch();

@@ -1,0 +1,114 @@
+{
+  "SCREENS": {},
+  "account": {
+    "update_password": "Update Password",
+    "username_input": "username",
+    "email_input": "email",
+    "username_placeholder": "Please type your new username",
+    "email_placeholder": "Please type your new email"
+  },
+  "display": {},
+  "emotion_search": {},
+  "user_search": {},
+  "feed": {},
+  "main": {
+    "made-by": "By Juan Isturiz"
+  },
+  "search": {},
+  "settings": {
+    "account": "Account",
+    "share_profile": "Share Profile",
+    "display": "Display",
+    "language": "Language",
+    "theme": "Theme",
+    "login": "Log In",
+    "sign_out": "Sign Out"
+  },
+  "share_profile": {},
+  "sign_in": {
+    "title": "Sign In"
+  },
+  "sign_up": {
+    "title": "Sign Up"
+  },
+  "user": {
+    "header": "Profile"
+  },
+  "COMPONENTS": {},
+  "editable": {},
+  "header": {},
+  "language_form": {},
+  "logout_modal": {
+    "logout": "Log Out",
+    "cancel": "Cancel"
+  },
+  "password_modal": {
+    "update": "Update Password",
+    "new": "New Password",
+    "new_placeholder": "Type your new password here...",
+    "confirm": "Confirm Password",
+    "confirm_placeholder": "Confirm your password here...",
+    "space_alert": "Invalid character detected. Please try again",
+    "unmatch_alert": "Passwords doesn't match. Please try again!",
+    "confirm_submit_alert": "Passwords doesn't match"
+  },
+  "searchbar": {
+    "placeholder": "Search by @user or #emotion..."
+  },
+  "signin_form": {
+    "email": "Email",
+    "email_placeholder": "ex: johndoe@gmail.com",
+    "password": "Contraseña",
+    "password_placeholder": "ex: john2023$T",
+    "submit": "Iniciar Sesion",
+    "redirect_title": "Does not have an account?",
+    "redirect_btn": "Go to Sign Up"
+  },
+  "signup_form": {
+    "username": "Username",
+    "username_placeholder": "ex: john-doe",
+    "email": "Email",
+    "email_placeholder": "ex: johndoe@gmail.com",
+    "password": "Password",
+    "password_placeholder": "ex: john2023$T",
+    "confirm": "Confirm Password",
+    "confirm_placeholder": "ex: john2023$T",
+    "submit": "Sign In",
+    "redirect_title": "Already have an account?",
+    "redirect_btn": "Go to Sign In"
+  },
+  "theme_form": {},
+  "thought_modal": {
+    "question": "What are you thinking about?",
+    "placeholder": "I'm thinking about cookies..",
+    "submit": "Think It Out Loud!"
+  },
+  "thought_post": {},
+  "NAVIGATION": {},
+  "STACKS": {},
+  "auth_stack": {
+    "main": "Main",
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In"
+  },
+  "search_stack": {
+    "intro": "Intro",
+    "emotion": "Emotion",
+    "user": "User"
+  },
+  "settings_stack": {
+    "settings": "Settings",
+    "account": "Account",
+    "share_profile": "Share Profile"
+  },
+  "user_stack": {
+    "profile": "Profile",
+    "configuration": "Configuration"
+  },
+  "TABS": {},
+  "home_tab": {
+    "feed": "Feed",
+    "search": "Search",
+    "user": "User"
+  }
+}

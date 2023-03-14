@@ -27,4 +27,13 @@ const logout = async () => {
   await removeAsyncStorage("user");
 };
 
-export const authService = { register, login, logout };
+const update = async (info) => {
+  const { userId, token, changes } = info;
+  const response = await axios.put(`${API_URL}/update/${userId}`, {
+    token,
+    changes,
+  });
+  return response.data;
+};
+
+export const authService = { register, login, logout, update };

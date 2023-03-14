@@ -12,9 +12,21 @@ export default function SearchNavigator() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Intro"
     >
-      <Stack.Screen name="Intro" component={SearchScreen} />
-      <Stack.Screen name="Emotion" component={EmotionSearchScreen} />
-      <Stack.Screen name="User" component={UserSearchScreen} />
+      <Stack.Screen
+        name="Intro"
+        component={SearchScreen}
+        options={{ headerTitle: "Intro" }}
+      />
+      <Stack.Screen
+        name="Emotion"
+        component={EmotionSearchScreen}
+        options={{ headerTitle: "Emotion" }}
+      />
+      <Stack.Screen
+        name="User"
+        component={UserSearchScreen}
+        options={{ headerTitle: "User" }}
+      />
     </Stack.Navigator>
   );
 }

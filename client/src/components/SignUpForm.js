@@ -82,7 +82,10 @@ const SignUpForm = () => {
       <View style={{ alignItems: "center", marginBottom: 50 }}>
         <TouchableOpacity
           style={styles.pressable}
-          onPress={() => dispatch(register(userData))}
+          onPress={() => {
+            if (!isValidEmail) return;
+            dispatch(register(userData));
+          }}
         >
           <Text style={{ fontSize: 28, fontWeight: "300" }}>Register</Text>
         </TouchableOpacity>
