@@ -1,3 +1,4 @@
+import { useTheme } from "@react-navigation/native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Searchbar from "../components/Searchbar";
@@ -5,6 +6,7 @@ import { setSearchParam } from "../redux/slices/ThoughtSlice";
 import emotions from "../utils/emotions";
 
 const SearchScreen = () => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
   const { searchParam } = useSelector((state) => state.thought);
 
@@ -13,7 +15,7 @@ const SearchScreen = () => {
     dispatch(setSearchParam({ text: `#${emotion}`, touchable: true }));
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.lightblue }]}>
       <Searchbar />
       <View style={styles.wrapper}>
         {emotions.map((e) => (

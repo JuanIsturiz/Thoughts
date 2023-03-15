@@ -1,3 +1,4 @@
+import { useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { StyleSheet, View, ScrollView } from "react-native";
@@ -8,6 +9,7 @@ import ThoughtPost from "../components/ThoughtPost";
 import { getAllThoughts } from "../redux/slices/ThoughtSlice";
 
 const FeedScreen = () => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
   const { thoughts } = useSelector((state) => state.thought);
   useEffect(() => {
@@ -16,7 +18,7 @@ const FeedScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useSelector((state) => state.auth);
   return (
-    <View>
+    <View style={{ backgroundColor: colors.bc }}>
       <Header onModal={() => setShowModal((prev) => !prev)} />
       <ThoughtModal
         showModal={showModal}

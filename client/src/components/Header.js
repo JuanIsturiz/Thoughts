@@ -1,13 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import EntyPo from "@expo/vector-icons/Entypo";
+import { useTheme } from "@react-navigation/native";
 
 const Header = ({ onModal }) => {
+  const { colors } = useTheme();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Thoughts</Text>
+    <View style={[styles.container, { borderBottomColor: colors.lightBorder }]}>
+      <Text style={[styles.title, { color: colors.font }]}>Thoughts</Text>
       <TouchableOpacity onPress={onModal}>
-        <EntyPo name="squared-plus" size={60} color="#BCCEF8" />
+        <EntyPo name="squared-plus" size={60} color={colors.lightblue} />
       </TouchableOpacity>
     </View>
   );
@@ -20,7 +22,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderBottomColor: "#ddd",
     borderBottomWidth: 2,
   },
   title: {

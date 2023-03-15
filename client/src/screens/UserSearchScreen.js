@@ -7,12 +7,14 @@ import {
 import ThoughtPost from "../components/ThoughtPost";
 import { ScrollView } from "react-native";
 import { useEffect } from "react";
+import { useTheme } from "@react-navigation/native";
 
 const UserSearchScreen = ({ route }) => {
+  const { colors } = useTheme();
+
   const dispatch = useDispatch();
   const { searchThoughts } = useSelector((state) => state.thought);
   const { username } = route.params;
-  console.log(username.substring(1, username.length));
   useEffect(() => {
     dispatch(getThoughtsByUsername(username.substring(1, username.length)));
     return () => {
@@ -21,9 +23,15 @@ const UserSearchScreen = ({ route }) => {
   }, [dispatch]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.bc }]}>
       <View style={styles.heading}>
-        <Text style={{ fontSize: 38, textTransform: "capitalize" }}>
+        <Text
+          style={{
+            color: colors.font,
+            fontSize: 38,
+            textTransform: "capitalize",
+          }}
+        >
           {username}
         </Text>
       </View>
@@ -44,8 +52,8 @@ const UserSearchScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
-    marginHorizontal: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   heading: {
     paddingVertical: 5,

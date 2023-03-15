@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import { register } from "../redux/slices/AuthSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SignUpForm = () => {
+  const { colors } = useTheme();
+  const { t } = useTranslation("global");
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
   const [userData, setUserData] = useState({
@@ -33,10 +36,13 @@ const SignUpForm = () => {
   return (
     <>
       <View style={styles.view}>
-        <Text style={styles.text}>Username</Text>
+        <Text style={[styles.text, { color: colors.font }]}>
+          {t("signup_form.username")}
+        </Text>
         <TextInput
-          style={styles.textInput}
-          placeholder="ex: john-doe"
+          style={[styles.textInput, { color: colors.font }]}
+          placeholder={t("signup_form.username_placeholder")}
+          placeholderTextColor={colors.ph}
           value={userData.username}
           onChangeText={(text) =>
             setUserData((prev) => ({ ...prev, username: text }))
@@ -44,10 +50,13 @@ const SignUpForm = () => {
         />
       </View>
       <View style={styles.view}>
-        <Text style={styles.text}>Email</Text>
+        <Text style={[styles.text, { color: colors.font }]}>
+          {t("signup_form.email")}
+        </Text>
         <TextInput
-          style={styles.textInput}
-          placeholder="ex: johndoe@gmail.com"
+          style={[styles.textInput, { color: colors.font }]}
+          placeholder={t("signup_form.email_placeholder")}
+          placeholderTextColor={colors.ph}
           value={userData.email}
           onChangeText={(text) =>
             setUserData((prev) => ({ ...prev, email: text }))
@@ -56,10 +65,13 @@ const SignUpForm = () => {
         />
       </View>
       <View style={styles.view}>
-        <Text style={styles.text}>Password</Text>
+        <Text style={[styles.text, { color: colors.font }]}>
+          {t("signup_form.password")}
+        </Text>
         <TextInput
-          style={styles.textInput}
-          placeholder="ex: john2023$T"
+          style={[styles.textInput, { color: colors.font }]}
+          placeholder={t("signup_form.password_placeholder")}
+          placeholderTextColor={colors.ph}
           value={userData.password}
           secureTextEntry
           onChangeText={(text) =>
@@ -68,10 +80,13 @@ const SignUpForm = () => {
         />
       </View>
       <View style={styles.view}>
-        <Text style={styles.text}>Password Confirmation</Text>
+        <Text style={[styles.text, { color: colors.font }]}>
+          {t("signup_form.confirm")}
+        </Text>
         <TextInput
-          style={styles.textInput}
-          placeholder="ex: john2023$T"
+          style={[styles.textInput, { color: colors.font }]}
+          placeholder={t("signup_form.confirm_placeholder")}
+          placeholderTextColor={colors.ph}
           value={userData.password2}
           secureTextEntry
           onChangeText={(text) =>
@@ -87,24 +102,29 @@ const SignUpForm = () => {
             dispatch(register(userData));
           }}
         >
-          <Text style={{ fontSize: 28, fontWeight: "300" }}>Register</Text>
+          <Text style={{ color: colors.font, fontSize: 28, fontWeight: "300" }}>
+            {t("signup_form.submit")}
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={{ alignItems: "center" }}>
         <Text
           style={{
+            color: colors.font,
             fontSize: 24,
             fontWeight: "300",
             marginBottom: 10,
           }}
         >
-          Already have an account?
+          {t("signup_form.redirect_title")}
         </Text>
         <TouchableOpacity
           style={styles.pressable}
           onPress={() => navigate("Sign In")}
         >
-          <Text style={{ fontSize: 24, fontWeight: "300" }}>Go to Sign In</Text>
+          <Text style={{ color: colors.font, fontSize: 24, fontWeight: "300" }}>
+            {t("signup_form.redirect_btn")}
+          </Text>
         </TouchableOpacity>
       </View>
     </>

@@ -9,8 +9,10 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { update } from "../redux/slices/AuthSlice";
+import { useTheme } from "@react-navigation/native";
 
 const Editable = ({
+  title,
   input,
   initValue,
   value,
@@ -21,6 +23,7 @@ const Editable = ({
   user,
   trim,
 }) => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
 
   const onConfirm = async () => {
@@ -51,30 +54,36 @@ const Editable = ({
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{input}</Text>
+      <Text style={[styles.title, { color: colors.font }]}>{title}</Text>
       {!edit ? (
-        <View style={styles.innerView}>
-          <Text style={{ fontSize: 22 }}>{value}</Text>
+        <View style={[styles.innerView, { borderColor: colors.lightBorder }]}>
+          <Text style={{ fontSize: 22, color: colors.font }}>{value}</Text>
           <TouchableOpacity onPress={() => setEdit(true)}>
-            <MaterialIcons name="edit" size={24} color="black" />
+            <MaterialIcons name="edit" size={24} color={colors.lightblue} />
           </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.innerView}>
           <TextInput
             style={{
+              color: colors.font,
               fontSize: 22,
             }}
             value={value}
             onChangeText={(text) => setValue(text)}
             placeholder={placeHolder}
+            placeholderTextColor={colors.ph}
           />
           <View style={{ flexDirection: "row", gap: 5 }}>
             <TouchableOpacity onPress={onConfirm}>
-              <MaterialIcons name="check" size={24} color="black" />
+              <MaterialIcons name="check" size={24} color={colors.lightblue} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onCancel}>
-              <MaterialIcons name="edit-off" size={24} color="black" />
+              <MaterialIcons
+                name="edit-off"
+                size={24}
+                color={colors.lightblue}
+              />
             </TouchableOpacity>
           </View>
         </View>

@@ -8,8 +8,10 @@ import {
 import emotions, { indexOfEmotion } from "../utils/emotions";
 import ThoughtPost from "../components/ThoughtPost";
 import { ScrollView } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 const EmotionSearchScreen = ({ route }) => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
   const { searchThoughts } = useSelector((state) => state.thought);
   const { emotion, multiple } = route.params;
@@ -35,9 +37,15 @@ const EmotionSearchScreen = ({ route }) => {
     ? { value: "Multiple Emotions", emoji: String.fromCodePoint("0x1F921") }
     : emotions[indexOfEmotion(emotion.substring(1, emotion.length))];
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.bc }]}>
       <View style={styles.heading}>
-        <Text style={{ fontSize: 38, textTransform: "capitalize" }}>
+        <Text
+          style={{
+            color: colors.font,
+            fontSize: 38,
+            textTransform: "capitalize",
+          }}
+        >
           {emotionObj.value + emotionObj.emoji}
         </Text>
       </View>
@@ -58,8 +66,8 @@ const EmotionSearchScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
-    marginHorizontal: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   heading: {
     paddingVertical: 5,

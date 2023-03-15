@@ -11,8 +11,12 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { update } from "../redux/slices/AuthSlice";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const PasswordModal = ({ showModal, setShowModal, user }) => {
+  const { colors } = useTheme();
+  const { t } = useTranslation("global");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -23,12 +27,12 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
 
   const onSuccess = async () => {
     if (password.includes(" ") || password2.includes(" ")) {
-      alert("Invalid character detected. Please try again");
+      alert(t("password_modal.space_alert"));
       return;
     }
     if (!password || !password2) return;
     if (password !== password2) {
-      alert("Passwords doesn't match. Please try again!");
+      alert(t("password_modal.unmatch_alert"));
       return;
     }
 
@@ -63,6 +67,7 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
         style={[
           styles.container,
           {
+            backgroundColor: colors.bc,
             position: "absolute",
             left: windowWidth / 2 - 175,
             top: windowHeight / 2 - 125,
@@ -77,36 +82,53 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
             marginBottom: 20,
           }}
         >
-          <Text style={{ fontSize: 22 }}>Update Password</Text>
+          <Text style={{ color: colors.font, fontSize: 22 }}>
+            {t("password_modal.update")}
+          </Text>
           <TouchableOpacity onPress={onClose}>
-            <AntDesign name="close" color="#000" size={30} />
+            <AntDesign name="close" color={colors.font} size={30} />
           </TouchableOpacity>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <Text style={{ fontSize: 20 }}>New Password</Text>
+          <Text style={{ color: colors.font, fontSize: 22, marginBottom: 2 }}>
+            {t("password_modal.new")}
+          </Text>
           <TextInput
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              { color: colors.font, backgroundColor: colors.lightBorder },
+            ]}
             secureTextEntry
             value={password}
             onChangeText={(text) => setPassword(text)}
-            placeholder="Type your new password here..."
+            placeholder={t("password_modal.new_placeholder")}
+            placeholderTextColor={colors.ph}
           />
         </View>
         <View style={{ marginBottom: 10 }}>
-          <Text style={{ fontSize: 20 }}>Confirm Password</Text>
+          <Text style={{ color: colors.font, fontSize: 22, marginBottom: 2 }}>
+            {t("password_modal.confirm")}
+          </Text>
           <TextInput
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              { color: colors.font, backgroundColor: colors.lightBorder },
+            ]}
             secureTextEntry
             value={password2}
             onChangeText={(text) => setPassword2(text)}
-            placeholder="Confirm your password here..."
+            placeholder={t("password_modal.confirm_placeholder")}
+            placeholderTextColor={colors.ph}
             onSubmitEditing={() => {
-              alert("Passwords doesn't match");
+              alert(t("password_modal.confirm_submit_alert"));
             }}
           />
         </View>
-        <TouchableOpacity style={styles.touchable} onPress={onSuccess}>
-          <Text style={{ fontSize: 24, color: "#FFF" }}>Update</Text>
+        <TouchableOpacity
+          style={[styles.touchable, { backgroundColor: colors.lightblue }]}
+          onPress={onSuccess}
+        >
+          <Text style={{ fontSize: 24, color: colors.font }}>Update</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -125,14 +147,13 @@ const styles = StyleSheet.create({
     width: "70%",
     backgroundColor: "#EEE",
     padding: 3,
-    fontSize: 18,
+    fontSize: 20,
   },
   touchable: {
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
     alignSelf: "center",
-    backgroundColor: "#333",
   },
 });
 export default PasswordModal;

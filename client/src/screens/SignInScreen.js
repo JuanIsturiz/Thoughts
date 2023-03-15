@@ -1,11 +1,18 @@
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import SignInForm from "../components/SignInForm";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const SignInScreen = () => {
+  const { t } = useTranslation("global");
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+    <View style={[styles.container, { backgroundColor: colors.bc }]}>
+      <Text style={[styles.title, { color: colors.font }]}>
+        {t("sign_in.title")}
+      </Text>
       <SignInForm />
     </View>
   );

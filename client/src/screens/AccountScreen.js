@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Editable from "../components/Editable";
 import PasswordModal from "../components/PasswordModal";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const AccountScreen = ({ route }) => {
+  const { t } = useTranslation("global");
+  const { colors } = useTheme();
   const { user } = route.params;
   const [showModal, setShowModal] = useState(false);
 
@@ -18,20 +22,21 @@ const AccountScreen = ({ route }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.bc }]}>
       <PasswordModal
         showModal={showModal}
         setShowModal={setShowModal}
         user={user}
       />
       <Editable
+        title={t("account.username_title")}
         input={"username"}
         initValue={user.username}
         value={userInfo.username}
         setValue={(text) =>
           setUserInfo((prev) => ({ ...prev, username: text }))
         }
-        placeHolder={"Please type your new username"}
+        placeHolder={t("account.username_placeholder")}
         edit={edit.username}
         setEdit={(bool) => {
           bool && setUserInfo((prev) => ({ ...prev, username: "" }));
@@ -46,13 +51,14 @@ const AccountScreen = ({ route }) => {
         user={user}
       />
       <Editable
+        title={t("account.email_title")}
         input={"email"}
         initValue={user.email}
         value={userInfo.email}
         setValue={(text) =>
           setUserInfo((prev) => ({ ...prev, email: text.toLowerCase() }))
         }
-        placeHolder={"Please type your new email"}
+        placeHolder={t("account.email_placeholder")}
         edit={edit.email}
         setEdit={(bool) => {
           bool && setUserInfo((prev) => ({ ...prev, email: "" }));
@@ -67,8 +73,14 @@ const AccountScreen = ({ route }) => {
         user={user}
       />
       <TouchableOpacity onPress={() => setShowModal(true)}>
-        <Text style={{ fontSize: 24, textDecorationLine: "underline" }}>
-          Update Password
+        <Text
+          style={{
+            color: colors.font,
+            fontSize: 24,
+            textDecorationLine: "underline",
+          }}
+        >
+          {t("account.update_password")}
         </Text>
       </TouchableOpacity>
     </View>
@@ -78,8 +90,8 @@ const AccountScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
-    marginVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
   },
 });
 

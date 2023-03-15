@@ -2,42 +2,126 @@
   "SCREENS": {},
   "account": {
     "update_password": "Actualizar Contraseña",
-    "username_input": "usuario",
-    "email_input": "correo",
+    "username_title": "usuario",
+    "email_title": "correo",
     "username_placeholder": "Por favor escribe tu usuario",
     "email_placeholder": "Por favor escribe tu correo"
   },
-  "display": {},
+  "language": {
+    "title": "Selecciona tu idioma",
+    "en_option": "Ingles",
+    "es_option": "Español"
+  },
+  "theme": {
+    "title": "Selecciona tu tema",
+    "light_option": "Claro",
+    "dark_option": "Oscuro"
+  },
   "emotion_search": {},
   "user_search": {},
   "feed": {},
   "main": {
-    "made-by": "Por Juan Isturiz"
+    "sign_up": "Registrarme",
+    "sign_in": "Iniciar Sesion",
+    "made_by": "Por Juan Isturiz"
   },
   "search": {},
-  "settings": {},
+  "settings": {
+    "account": "Cuenta",
+    "account_opt": "Cuenta",
+    "share_profile_opt": "Compartir Perfil",
+    "display": "Interfaz",
+    "language_opt": "Idioma",
+    "theme_opt": "Tema",
+    "login": "Sesion",
+    "sign_out_opt": "Cerrar Session"
+  },
   "share_profile": {},
-  "sign_in": {},
-  "sign_up": {},
-  "user": {},
+  "sign_in": {
+    "title": "Iniciar Sesion"
+  },
+  "sign_up": {
+    "title": "Crear Cuenta"
+  },
+  "user": {
+    "header": "Mi Perfil"
+  },
   "COMPONENTS": {},
   "editable": {},
   "header": {},
-  "language_form": {},
-  "logout_modal": {},
-  "password_modal": {},
-  "searchbar": {},
-  "signin_form": {},
-  "signup_form": {},
+  "logout_modal": {
+    "logout": "Cerrar Sesion",
+    "cancel": "Cancelar"
+  },
+  "password_modal": {
+    "update": "Actualizar Contraseña",
+    "new": "Nueva Contraseña",
+    "new_placeholder": "Escribe tu nueva contraseña aqui...",
+    "confirm": "Confirma tu Contraseña",
+    "confirm_placeholder": "Confirma tu nueva contraseña aqui...",
+    "space_alert": "Caracteres invalidos detectados. Por favor intentalo de nuevo",
+    "unmatch_alert": "Las contraseñas no coinciden. Por favor intentalo de nuevo",
+    "confirm_submit_alert": "Las contraseñas no coinciden"
+  },
+  "searchbar": {
+    "placeholder": "Buscar por @usuario o #emocion..."
+  },
+  "signin_form": {
+    "email": "Correo",
+    "email_placeholder": "ej: johndoe@gmail.com",
+    "password": "Contraseña",
+    "password_placeholder": "ej: john2023$T",
+    "submit": "Iniciar Sesion",
+    "redirect_title": "No posees una cuenta?",
+    "redirect_btn": "Registrate aqui"
+  },
+  "signup_form": {
+    "username": "Usuario",
+    "username_placeholder": "ej: john-doe",
+    "email": "Correo",
+    "email_placeholder": "ej: johndoe@gmail.com",
+    "password": "Contraseña",
+    "password_placeholder": "ej: john2023$T",
+    "confirm": "Confirma tu Contraseña",
+    "confirm_placeholder": "ej: john2023$T",
+    "submit": "Registrarme",
+    "redirect_title": "Ya tienes una cuenta?",
+    "redirect_btn": "Inicia sesion aqui"
+  },
   "theme_form": {},
-  "thought_modal": {},
+  "thought_modal": {
+    "question": "En que estas pensando?",
+    "placeholder": "Estoy pensando en galletas..",
+    "submit": "Piensalo en alto!"
+  },
   "thought_post": {},
   "NAVIGATION": {},
   "STACKS": {},
-  "auth_stack": {},
-  "search_stack": {},
-  "settings_stack": {},
-  "user_stack": {},
+  "auth_stack": {
+    "main": "Principal",
+    "sign_up": "Registrarme",
+    "sign_in": "Iniciar Sesion"
+  },
+  "search_stack": {
+    "intro": "Intro",
+    "emotion": "Emocion",
+    "user": "Usuario"
+  },
+  "settings_stack": {
+    "settings": "Ajustes",
+    "account": "Cuenta",
+    "share_profile": "Compartir Perfil",
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "user_stack": {
+    "profile": "Perfil",
+    "configuration": "Configuracion"
+  },
   "TABS": {},
-  "home_tab": {}
+  "home_tab": {
+    "feed": "Inicio",
+    "search": "Buscar",
+    "user": "Usuario"
+  }
 }

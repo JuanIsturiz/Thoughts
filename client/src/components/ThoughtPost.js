@@ -13,8 +13,10 @@ import { formatDistance } from "date-fns";
 import Heart from "../icons/Heart";
 import { useDispatch, useSelector } from "react-redux";
 import { likeThought } from "../redux/slices/ThoughtSlice";
+import { useTheme } from "@react-navigation/native";
 
 const ThoughtPost = ({ thought, userPage }) => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { _id, text, emotion, userInfo, createdAt, likes } = thought;
@@ -54,6 +56,8 @@ const ThoughtPost = ({ thought, userPage }) => {
       style={[
         styles.container,
         {
+          backgroundColor: colors.bc,
+          shadowColor: colors.shadow,
           flex: userPage ? 2 : 1,
           opacity: animatedValue,
           transform: [{ scale: animatedValue }],
@@ -63,6 +67,7 @@ const ThoughtPost = ({ thought, userPage }) => {
       <View style={styles.description}>
         <Text
           style={{
+            color: colors.font,
             fontSize: 18,
           }}
         >
@@ -85,7 +90,12 @@ const ThoughtPost = ({ thought, userPage }) => {
         <Text
           style={[
             styles.text,
-            { textTransform: "capitalize", color: emotionTextColor(emotion) },
+
+            {
+              color: colors.font,
+              textTransform: "capitalize",
+              color: emotionTextColor(emotion),
+            },
           ]}
         >
           {formatDistance(new Date(createdAt), new Date(), { addSuffix: true })}
@@ -94,7 +104,11 @@ const ThoughtPost = ({ thought, userPage }) => {
           <Text
             style={[
               styles.text,
-              { textTransform: "capitalize", color: emotionTextColor(emotion) },
+              {
+                color: colors.font,
+                textTransform: "capitalize",
+                color: emotionTextColor(emotion),
+              },
             ]}
           >
             {emotion}
@@ -121,7 +135,6 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
     backgroundColor: "#fff",
-    shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.3,

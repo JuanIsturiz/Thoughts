@@ -2,61 +2,82 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import LogoutModal from "../components/LogoutModal";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SettingsScreen = () => {
+  const { t } = useTranslation("global");
+  const { colors } = useTheme();
   const [showModal, setShowModal] = useState(false);
   const { navigate } = useNavigation();
   const { user } = useSelector((state) => state.auth);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.bc }]}>
       <LogoutModal showModal={showModal} setShowModal={setShowModal} />
       <View style={styles.section}>
-        <Text style={styles.section_title}>Account</Text>
+        <Text style={[styles.section_title, { color: colors.font }]}>
+          {t("settings.account")}
+        </Text>
         <View>
           <TouchableOpacity
-            style={styles.option}
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
             onPress={() => navigate("Account", { user })}
           >
-            <Text style={styles.option_title}>Account</Text>
-            <Entypo name="chevron-right" size={32} color="#222" />
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.account_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.option}
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
             onPress={() => navigate("Share Profile", { user })}
           >
-            <Text style={styles.option_title}>Share Profile</Text>
-            <Entypo name="chevron-right" size={32} color="#222" />
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.share_profile_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.section}>
-        <Text style={styles.section_title}>Display</Text>
+        <Text style={[styles.section_title, { color: colors.font }]}>
+          {t("settings.display")}
+        </Text>
         <View>
-          <View style={styles.option}>
-            <Text style={styles.option_title}>Language</Text>
-            <TouchableOpacity>
-              <Entypo name="chevron-right" size={32} color="#222" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.option}>
-            <Text style={styles.option_title}>Theme</Text>
-            <TouchableOpacity>
-              <Entypo name="chevron-right" size={32} color="#222" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
+            onPress={() => navigate("Language")}
+          >
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.language_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
+            onPress={() => navigate("Theme")}
+          >
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.theme_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.section}>
-        <Text style={styles.section_title}>Log In</Text>
+        <Text style={[styles.section_title, { color: colors.font }]}>
+          {t("settings.login")}
+        </Text>
         <View>
           <TouchableOpacity
-            style={styles.option}
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
             onPress={() => setShowModal(true)}
           >
-            <Text style={styles.option_title}>Sign Out</Text>
-            <Entypo name="chevron-right" size={32} color="#222" />
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.sign_out_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
           </TouchableOpacity>
         </View>
       </View>
@@ -66,6 +87,7 @@ const SettingsScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
   },
   section: {

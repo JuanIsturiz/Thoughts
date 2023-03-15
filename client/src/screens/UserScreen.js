@@ -5,9 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ThoughtPost from "../components/ThoughtPost";
 import { deleteThought, getThoughtsByUser } from "../redux/slices/ThoughtSlice";
 import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
-//TODO fix user thoughts scroll, modal position (DIMENSIONS) and like bug on new thought, ADD BIO
+import { useNavigation, useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+
+//TODO fix user thoughts scroll, modal position (DIMENSIONS) and like bug on new thought, ADD BIO, initial uef LOCALIZATION
+
 const UserScreen = () => {
+  const { t } = useTranslation("global");
+  const { colors } = useTheme();
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -21,9 +26,16 @@ const UserScreen = () => {
   };
 
   return (
-    <View>
-      <View style={styles.header}>
-        <Text style={styles.header_title}>Profile</Text>
+    <View style={{ backgroundColor: colors.bc }}>
+      <View
+        style={[
+          styles.header,
+          { backgroundColor: colors.bc, borderBottomColor: colors.lightBorder },
+        ]}
+      >
+        <Text style={[styles.header_title, { color: colors.font }]}>
+          {t("user.header")}
+        </Text>
       </View>
       <View style={styles.user_info}>
         <View
@@ -34,15 +46,17 @@ const UserScreen = () => {
             marginBottom: 15,
           }}
         >
-          <Text style={{ fontSize: 32 }}>
+          <Text style={{ color: colors.font, fontSize: 32 }}>
             {user ? user.username : "Sample User"}
           </Text>
           <TouchableOpacity onPress={() => navigate("Configuration")}>
-            <Feather name="settings" size={30} />
+            <Feather name="settings" size={30} color={colors.lightblue} />
           </TouchableOpacity>
         </View>
         <View style={styles.description}>
-          <Text style={{ fontSize: 18 }}>Sample user bio...</Text>
+          <Text style={{ color: colors.font, fontSize: 18 }}>
+            Sample user bio...
+          </Text>
         </View>
       </View>
       <ScrollView style={{ height: 700 }}>

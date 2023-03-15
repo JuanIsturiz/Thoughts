@@ -10,8 +10,11 @@ import {
 import MainLogo from "../icons/MainLogo";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const MainScreen = () => {
+  const { t } = useTranslation("global");
+
   const animatedValue = useState(new Animated.Value(1))[0];
   useEffect(() => {
     Animated.loop(
@@ -54,7 +57,7 @@ const MainScreen = () => {
         style={{
           flexDirection: "row",
           justifyContent: "center",
-          gap: 30,
+          gap: 25,
           marginBottom: 125,
         }}
       >
@@ -62,22 +65,22 @@ const MainScreen = () => {
           style={styles.pressable}
           onPress={() => navigate("Sign Up")}
         >
-          <Text style={{ fontSize: 38 }}>Sign Up</Text>
+          <Text style={{ fontSize: 34 }}>{t("main.sign_up")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.pressable}
           onPress={() => navigate("Sign In")}
         >
-          <Text style={{ fontSize: 38 }}>Log In</Text>
+          <Text style={{ fontSize: 34 }}>{t("main.sign_in")}</Text>
         </TouchableOpacity>
       </View>
       <Text
         style={{
           marginBottom: 50,
-          fontSize: 32,
+          fontSize: 24,
         }}
       >
-        By Juan Isturiz
+        {t("main.made_by")}
       </Text>
     </LinearGradient>
   );

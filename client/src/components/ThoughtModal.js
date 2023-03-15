@@ -12,8 +12,12 @@ import { Picker } from "@react-native-picker/picker";
 import { createThought } from "../redux/slices/ThoughtSlice";
 import { useDispatch } from "react-redux";
 import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
+  const { colors } = useTheme();
+  const { t } = useTranslation("global");
   const [text, setText] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState("contempt");
 
@@ -50,24 +54,25 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
         setShowModal(!showModal);
       }}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.bc }]}>
         <View style={styles.close}>
           <TouchableOpacity onPress={onClose}>
             <AntDesign name="close" color="#000" size={30} />
           </TouchableOpacity>
         </View>
         <View style={styles.main}>
-          <Text style={{ fontSize: 16, marginBottom: 5 }}>
-            What are you thinking about?
+          <Text style={{ color: colors.font, fontSize: 16, marginBottom: 5 }}>
+            {t("thought_modal.question")}
           </Text>
           <View style={styles.box}>
             <TextInput
-              style={styles.textInput}
+              style={[styles.textInput, { color: colors.font }]}
               autoFocus={true}
               multiline={true}
               value={text}
               onChangeText={(text) => setText(text)}
-              placeholder="I'm thinking about cookies.."
+              placeholder={t("thought_modal.placeholder")}
+              placeholderTextColor={colors.ph}
             />
           </View>
         </View>
@@ -80,11 +85,12 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
                 setSelectedEmotion(emotiomValue)
               }
             >
-              {emotions.map((emotion) => (
+              {emotions.map((emotion, idx) => (
                 <Picker.Item
-                  key={emotion}
+                  key={idx}
                   label={emotion.value}
                   value={emotion.value}
+                  color={colors.font}
                 />
               ))}
             </Picker>
@@ -100,9 +106,13 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
             onPress={onThink}
           >
             <Text
-              style={{ fontSize: 24, color: emotionTextColor(selectedEmotion) }}
+              style={{
+                color: colors.font,
+                fontSize: 24,
+                color: emotionTextColor(selectedEmotion),
+              }}
             >
-              Think It Out Loud!
+              {t("thought_modal.submit")}
             </Text>
           </TouchableOpacity>
         </View>

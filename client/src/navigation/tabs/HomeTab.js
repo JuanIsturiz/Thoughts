@@ -5,12 +5,24 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchNavigator from "../stacks/SearchStack";
 import UserNavigator from "../stacks/UserStack";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeNavigator() {
+  const { colors } = useTheme();
+  const { t } = useTranslation("global");
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { backgroundColor: colors.bc },
+        tabBarActiveTintColor: colors.tabActive,
+        tabBarInactiveTintColor: colors.tabInactive,
+        tabBarLabelStyle: { fontSize: 12, fontWeight: 700 },
+      }}
+    >
       <Tab.Screen
         name="Feed"
         component={FeedScreen}
@@ -22,7 +34,9 @@ export default function HomeNavigator() {
               size={40}
             />
           ),
-          tabBarLabel: "Feed",
+          tabBarActiveTintColor: colors.lightblue,
+          tabBarInactiveTintColor: colors.tabInactive,
+          tabBarLabel: t("home_tab.feed"),
         }}
       />
       <Tab.Screen
@@ -30,9 +44,11 @@ export default function HomeNavigator() {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Fontisto name="zoom" color={color} size={30} />
+            <Fontisto name="zoom" color={color} size={28} />
           ),
-          tabBarLabel: "Search",
+          tabBarActiveTintColor: colors.lightblue,
+          tabBarInactiveTintColor: colors.tabInactive,
+          tabBarLabel: t("home_tab.search"),
         }}
       />
       <Tab.Screen
@@ -40,9 +56,11 @@ export default function HomeNavigator() {
         component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="user" color={color} size={30} />
+            <AntDesign name="user" color={color} size={28} />
           ),
-          tabBarLabel: "User",
+          tabBarActiveTintColor: colors.lightblue,
+          tabBarInactiveTintColor: colors.tabInactive,
+          tabBarLabel: t("home_tab.user"),
         }}
       />
     </Tab.Navigator>
