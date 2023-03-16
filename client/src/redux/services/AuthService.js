@@ -25,6 +25,8 @@ const login = async (userData) => {
 
 const logout = async () => {
   await removeAsyncStorage("user");
+  await removeAsyncStorage("lang");
+  await removeAsyncStorage("theme");
 };
 
 const update = async (info) => {

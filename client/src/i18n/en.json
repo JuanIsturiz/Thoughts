@@ -1,11 +1,17 @@
 {
   "SCREENS": {},
+  "user_profile": {
+    "username": "Username",
+    "bio": "Bio"
+  },
   "account": {
     "update_password": "Update Password",
     "username_title": "username",
     "email_title": "email",
+    "bio_title": "bio",
     "username_placeholder": "Please type your new username",
-    "email_placeholder": "Please type your new email"
+    "email_placeholder": "Please type your new email",
+    "bio_placeholder": "Your biography goes here..."
   },
   "language": {
     "title": "Select your language",
@@ -30,6 +36,7 @@
     "account": "Account",
     "account_opt": "Account",
     "share_profile_opt": "Share Profile",
+    "liked_opt": "Liked",
     "display": "Display",
     "language_opt": "Language",
     "theme_opt": "Theme",
@@ -63,6 +70,9 @@
     "unmatch_alert": "Passwords doesn't match. Please try again",
     "confirm_submit_alert": "Passwords doesn't match"
   },
+  "retry": {
+    "text": "Retry"
+  },
   "searchbar": {
     "placeholder": "Search by @user or #emotion..."
   },
@@ -89,6 +99,10 @@
     "redirect_btn": "Go to Sign In"
   },
   "theme_form": {},
+  "thoughtlist": {
+    "end": "You've reached the end",
+    "not_found": "No Thoughts found"
+  },
   "thought_modal": {
     "question": "What are you thinking about?",
     "placeholder": "I'm thinking about cookies..",
@@ -102,6 +116,10 @@
     "sign_up": "Sign Up",
     "sign_in": "Sign In"
   },
+  "feed_stack": {
+    "feed": "Feed",
+    "user_profile": "User Profile"
+  },
   "search_stack": {
     "intro": "Intro",
     "emotion": "Emotion",
@@ -111,6 +129,7 @@
     "settings": "Settings",
     "account": "Account",
     "share_profile": "Share Profile",
+    "liked": "Liked Thoughts",
     "language": "Language",
     "theme": "Theme"
   },

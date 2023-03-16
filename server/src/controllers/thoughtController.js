@@ -2,9 +2,13 @@ const asyncHandler = require("express-async-handler");
 const Thought = require("../models/thoughtModel");
 
 exports.getAll = asyncHandler(async (req, res) => {
+  const { page } = req.query;
   try {
-    const thoughts = await Thought.find().sort({ createdAt: -1 });
-    res.json(thoughts);
+    const thoughts = await Thought.find()
+      .sort({ createdAt: -1 })
+      .skip(page * 8)
+      .limit(8);
+    res.json({ thoughts, end: thoughts.length < 5 });
   } catch (err) {
     res.status(500);
     throw new Error(err.message);
@@ -16,6 +20,7 @@ exports.getById = asyncHandler(async (req, res) => {
 
   try {
     const thoughts = await Thought.findById(id);
+
     res.json({ thoughts });
   } catch (err) {
     res.status(500);
@@ -25,10 +30,28 @@ exports.getById = asyncHandler(async (req, res) => {
 
 exports.getByUserId = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
+  const page = Number(req.query.page);
   try {
-    const thoughts = await Thought.find({ "userInfo.id": id });
-    res.json(thoughts);
+    const thoughts = await Thought.find({ "userInfo.id": id })
+      .sort({ createdAt: -1 })
+      .skip(page * 8)
+      .limit(8);
+    res.json({ thoughts, end: thoughts.length < 5 });
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
+});
+
+exports.getLiked = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const page = Number(req.query.page);
+  try {
+    const thoughts = await Thought.find({ likes: { $in: [id] } })
+      .sort({ createdAt: -1 })
+      .skip(page * 8)
+      .limit(8);
+    res.json({ thoughts, end: thoughts.length < 5 });
   } catch (err) {
     res.status(500);
     throw new Error(err.message);
@@ -36,19 +59,27 @@ exports.getByUserId = asyncHandler(async (req, res) => {
 });
 
 exports.getByEmotion = asyncHandler(async (req, res) => {
+  const page = Number(req.query.page);
   const multiple = req.query.multiple === "true";
   try {
     const thoughts = [];
     if (!multiple) {
-      const innerThoughts = await Thought.find({ emotion: req.query.emotion });
+      const innerThoughts = await Thought.find({
+        emotion: req.query.emotion,
+      })
+        .sort({ createdAt: -1 })
+        .skip(page * 8)
+        .limit(8);
       thoughts.push(...innerThoughts);
     } else {
-      for (const emotion of req.query.emotion) {
-        const innerThoughts = await Thought.find({ emotion });
-        thoughts.push(...innerThoughts);
-      }
+      const filter = { $or: req.query.emotion.map((emotion) => ({ emotion })) };
+      const innerThoughts = await Thought.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(page * 8)
+        .limit(8);
+      thoughts.push(...innerThoughts);
     }
-    res.json(thoughts);
+    res.json({ thoughts, end: thoughts.length < 5 });
   } catch (err) {
     res.status(500);
     throw new Error(err.message);
@@ -57,9 +88,13 @@ exports.getByEmotion = asyncHandler(async (req, res) => {
 
 exports.getByUsername = asyncHandler(async (req, res) => {
   const { username } = req.query;
+  const page = Number(req.query.page);
   try {
-    const thoughts = await Thought.find({ "userInfo.username": username });
-    res.json(thoughts);
+    const thoughts = await Thought.find({ "userInfo.username": username })
+      .sort({ createdAt: -1 })
+      .skip(page * 8)
+      .limit(8);
+    res.json({ thoughts, end: thoughts.length < 5 });
   } catch (err) {
     res.status(500);
     throw new Error(err.message);

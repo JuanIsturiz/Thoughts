@@ -36,6 +36,7 @@ const MainScreen = () => {
     ).start();
   }, []);
   const { navigate } = useNavigation();
+
   return (
     <LinearGradient
       colors={["#FAF7F0", "#BCCEF8", "#BDCEF8"]}

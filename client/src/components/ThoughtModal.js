@@ -54,7 +54,14 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
         setShowModal(!showModal);
       }}
     >
-      <View style={[styles.container, { backgroundColor: colors.bc }]}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: colors.bc,
+          },
+        ]}
+      >
         <View style={styles.close}>
           <TouchableOpacity onPress={onClose}>
             <AntDesign name="close" color="#000" size={30} />
@@ -123,8 +130,6 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 350,
-    height: 450,
     padding: 10,
     backgroundColor: "#FAF7F0",
     shadowColor: "#000",
@@ -132,8 +137,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 0.3,
     borderRadius: 5,
-    marginTop: 75,
-    marginLeft: 30,
+    marginTop: 55,
+    marginHorizontal: 15,
   },
   close: {
     alignItems: "flex-end",

@@ -1,29 +1,44 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getThoughtsByUsername,
   resetSearchThoughts,
 } from "../redux/slices/ThoughtSlice";
-import ThoughtPost from "../components/ThoughtPost";
-import { ScrollView } from "react-native";
 import { useEffect } from "react";
 import { useTheme } from "@react-navigation/native";
+import ThoughtList from "../components/ThoughtList";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ToastManager from "toastify-react-native";
+import useError from "../hooks/useError";
+import Retry from "../components/Retry";
 
 const UserSearchScreen = ({ route }) => {
   const { colors } = useTheme();
 
   const dispatch = useDispatch();
-  const { searchThoughts } = useSelector((state) => state.thought);
+  const { searchThoughts, pages, isLoading, isError, message } = useSelector(
+    (state) => state.thought
+  );
+  useError(isError, message);
+
   const { username } = route.params;
+
   useEffect(() => {
-    dispatch(getThoughtsByUsername(username.substring(1, username.length)));
     return () => {
       dispatch(resetSearchThoughts());
     };
   }, [dispatch]);
 
+  const info = {
+    page: pages.search,
+    username: username.substring(1, username.length),
+  };
+
+  if (isLoading && pages.search === 0) return <LoadingSpinner size={"large"} />;
+
   return (
-    <View style={[styles.container, { backgroundColor: colors.bc }]}>
+    <View style={{ flex: 1, backgroundColor: colors.bc }}>
+      <ToastManager duration={4000} />
       <View style={styles.heading}>
         <Text
           style={{
@@ -35,28 +50,23 @@ const UserSearchScreen = ({ route }) => {
           {username}
         </Text>
       </View>
-      <ScrollView style={{ height: 700 }}>
-        <View>
-          {searchThoughts.length ? (
-            searchThoughts.map((thought, idx) => (
-              <ThoughtPost key={idx} thought={thought} />
-            ))
-          ) : (
-            <Text>No thoughts to show :(</Text>
-          )}
-        </View>
-      </ScrollView>
+      {!isError ? (
+        <ThoughtList
+          page={pages.search}
+          thoughts={searchThoughts}
+          getThoughts={getThoughtsByUsername}
+          info={info}
+        />
+      ) : (
+        <Retry />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
   heading: {
-    paddingVertical: 5,
+    padding: 5,
     justifyContent: "center",
     borderBottomColor: "#DDD",
     borderBottomWidth: 2,

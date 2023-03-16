@@ -84,6 +84,7 @@ exports.login = asyncHandler(async (req, res) => {
     id: user._id,
     username: user.username,
     email: user.email,
+    bio: user.bio,
     token: generateToken(user._id),
   });
 });
@@ -96,6 +97,13 @@ exports.update = asyncHandler(async (req, res) => {
   const { token, changes } = req.body;
 
   let newUser;
+  if ("bio" in changes) {
+    if (changes.bio.length > 100) {
+      res.status(400);
+      throw new Error("Your bio must be 100 characters long or less..");
+    }
+    newUser = await User.findByIdAndUpdate(id, changes, { new: true });
+  }
   if ("password" in changes) {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(changes.password, salt);
@@ -118,9 +126,21 @@ exports.update = asyncHandler(async (req, res) => {
     id: newUser._id,
     username: newUser.username,
     email: newUser.email,
+    bio: newUser.bio,
     token,
   };
   res.json(user);
+});
+
+exports.getUserInfo = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).select({ username: 1, bio: 1 });
+    res.json(user);
+  } catch (err) {
+    res.status(500);
+    throw new Error(err.message);
+  }
 });
 
 // Generate JWT

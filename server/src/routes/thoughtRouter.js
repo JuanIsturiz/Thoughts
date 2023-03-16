@@ -9,6 +9,7 @@ const {
   updateById,
   getByUserId,
   getByUsername,
+  getLiked,
 } = require("../controllers/thoughtController");
 
 const authenticate = require("../middleware/auth");
@@ -22,10 +23,13 @@ router.get("/:id", getById);
 // get thought by user id
 router.get("/user/:id", getByUserId);
 
-// get get thoughts by emotion
+// get liked thoughts by user
+router.get("/user/:id/liked", getLiked);
+
+// get thoughts by emotion
 router.get("/search/emotion", getByEmotion);
 
-// get get thoughts by username
+// get thoughts by username
 router.get("/search/username", getByUsername);
 
 // add new thought

@@ -22,6 +22,7 @@ const Editable = ({
   setEdit,
   user,
   trim,
+  multi,
 }) => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
@@ -57,7 +58,9 @@ const Editable = ({
       <Text style={[styles.title, { color: colors.font }]}>{title}</Text>
       {!edit ? (
         <View style={[styles.innerView, { borderColor: colors.lightBorder }]}>
-          <Text style={{ fontSize: 22, color: colors.font }}>{value}</Text>
+          <Text style={{ padding: 3, fontSize: 22, color: colors.font }}>
+            {value}
+          </Text>
           <TouchableOpacity onPress={() => setEdit(true)}>
             <MaterialIcons name="edit" size={24} color={colors.lightblue} />
           </TouchableOpacity>
@@ -66,6 +69,8 @@ const Editable = ({
         <View style={styles.innerView}>
           <TextInput
             style={{
+              flex: 1,
+              padding: 3,
               color: colors.font,
               fontSize: 22,
             }}
@@ -73,6 +78,7 @@ const Editable = ({
             onChangeText={(text) => setValue(text)}
             placeholder={placeHolder}
             placeholderTextColor={colors.ph}
+            multiline={!!multi}
           />
           <View style={{ flexDirection: "row", gap: 5 }}>
             <TouchableOpacity onPress={onConfirm}>
@@ -111,6 +117,7 @@ const styles = StyleSheet.create({
     gap: 20,
     borderWidth: 1,
     borderRadius: 5,
+    overflow: "hidden",
   },
 });
 

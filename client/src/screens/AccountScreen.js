@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Editable from "../components/Editable";
 import PasswordModal from "../components/PasswordModal";
 import { useTranslation } from "react-i18next";
@@ -19,6 +25,7 @@ const AccountScreen = ({ route }) => {
   const [userInfo, setUserInfo] = useState({
     username: user.username,
     email: user.email,
+    bio: user.bio,
   });
 
   return (
@@ -72,6 +79,31 @@ const AccountScreen = ({ route }) => {
         }
         user={user}
       />
+
+      <Editable
+        title={t("account.bio_title")}
+        input={"bio"}
+        initValue={user.bio}
+        value={userInfo.bio}
+        setValue={(text) =>
+          setUserInfo((prev) => ({ ...prev, bio: text.toLowerCase() }))
+        }
+        placeHolder={t("account.bio_placeholder")}
+        edit={edit.bio}
+        setEdit={(bool) => {
+          bool && setUserInfo((prev) => ({ ...prev, bio: "" }));
+          setEdit((prev) => ({ ...prev, bio: bool }));
+        }}
+        trim={() =>
+          setUserInfo((prev) => ({
+            ...prev,
+            username: userInfo.bio.trim(),
+          }))
+        }
+        user={user}
+        multi={true}
+      />
+
       <TouchableOpacity onPress={() => setShowModal(true)}>
         <Text
           style={{
@@ -92,6 +124,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     paddingVertical: 15,
+  },
+  textInput: {
+    width: 350,
+    padding: 3,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 20,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 });
 

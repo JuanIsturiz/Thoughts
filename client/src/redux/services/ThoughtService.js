@@ -3,20 +3,29 @@ import IP from "../../constants/api";
 
 const API_URL = `${IP}/thought`;
 
-const getAllThoughts = async () => {
-  const response = await axios(API_URL);
+const getAllThoughts = async (page) => {
+  const response = await axios.get(`${API_URL}?page=${page}`);
   return response.data;
 };
 
-const getThoughtsByUser = async (userId) => {
-  const response = await axios(`${API_URL}/user/${userId}`);
+const getThoughtsByUser = async (info) => {
+  const { userId, page } = info;
+  const response = await axios.get(`${API_URL}/user/${userId}?page=${page}`);
+  return response.data;
+};
+
+const getLikedThoughts = async (info) => {
+  const { userId, page } = info;
+  const response = await axios.get(
+    `${API_URL}/user/${userId}/liked?page=${page}`
+  );
   return response.data;
 };
 
 const getThoughtsByEmotion = async (info) => {
-  const { multiple, emotion } = info;
+  const { multiple, emotion, page } = info;
 
-  const url = `${API_URL}/search/emotion?multiple=${multiple}&emotion=`;
+  const url = `${API_URL}/search/emotion?page=${page}&multiple=${multiple}&emotion=`;
   let query = "";
 
   if (multiple) {
@@ -31,13 +40,14 @@ const getThoughtsByEmotion = async (info) => {
     query = emotion;
   }
 
-  const response = await axios(url + query);
+  const response = await axios.get(url + query);
   return response.data;
 };
 
-const getThoughtsByUsername = async (username) => {
-  const url = `${API_URL}/search/username?username=${username}`;
-  const response = await axios(url);
+const getThoughtsByUsername = async (info) => {
+  const { username, page } = info;
+  const url = `${API_URL}/search/username?page=${page}&username=${username}`;
+  const response = await axios.get(url);
   return response.data;
 };
 
@@ -73,6 +83,7 @@ const likeThought = async (info) => {
 export const thoughtService = {
   getAllThoughts,
   getThoughtsByUser,
+  getLikedThoughts,
   getThoughtsByEmotion,
   getThoughtsByUsername,
   createThought,

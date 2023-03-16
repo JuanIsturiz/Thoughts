@@ -1,11 +1,17 @@
 {
   "SCREENS": {},
+  "user_profile": {
+    "username": "Usuario",
+    "bio": "biografia"
+  },
   "account": {
     "update_password": "Actualizar Contraseña",
     "username_title": "usuario",
     "email_title": "correo",
+    "bio_title": "biografia",
     "username_placeholder": "Por favor escribe tu usuario",
-    "email_placeholder": "Por favor escribe tu correo"
+    "email_placeholder": "Por favor escribe tu correo",
+    "bio_placeholder": "Tu biografia va aqui..."
   },
   "language": {
     "title": "Selecciona tu idioma",
@@ -30,6 +36,7 @@
     "account": "Cuenta",
     "account_opt": "Cuenta",
     "share_profile_opt": "Compartir Perfil",
+    "liked_opt": "Me Gusta",
     "display": "Interfaz",
     "language_opt": "Idioma",
     "theme_opt": "Tema",
@@ -63,6 +70,9 @@
     "unmatch_alert": "Las contraseñas no coinciden. Por favor intentalo de nuevo",
     "confirm_submit_alert": "Las contraseñas no coinciden"
   },
+  "retry": {
+    "text": "Reintentar"
+  },
   "searchbar": {
     "placeholder": "Buscar por @usuario o #emocion..."
   },
@@ -89,6 +99,10 @@
     "redirect_btn": "Inicia sesion aqui"
   },
   "theme_form": {},
+  "thoughtlist": {
+    "end": "LLegaste a el final",
+    "not_found": "No se encontraron pensamientos"
+  },
   "thought_modal": {
     "question": "En que estas pensando?",
     "placeholder": "Estoy pensando en galletas..",
@@ -102,6 +116,10 @@
     "sign_up": "Registrarme",
     "sign_in": "Iniciar Sesion"
   },
+  "feed_stack": {
+    "feed": "Inicio",
+    "user_profile": "Perfil"
+  },
   "search_stack": {
     "intro": "Intro",
     "emotion": "Emocion",
@@ -111,6 +129,7 @@
     "settings": "Ajustes",
     "account": "Cuenta",
     "share_profile": "Compartir Perfil",
+    "liked": "Me Gusta",
     "language": "Idioma",
     "theme": "Tema"
   },

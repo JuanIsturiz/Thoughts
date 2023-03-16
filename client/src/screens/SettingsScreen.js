@@ -38,6 +38,15 @@ const SettingsScreen = () => {
             </Text>
             <Entypo name="chevron-right" size={32} color={colors.font} />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.option, { backgroundColor: colors.lightblue }]}
+            onPress={() => navigate("Liked", { userId: user.id })}
+          >
+            <Text style={[styles.option_title, { color: colors.font }]}>
+              {t("settings.liked_opt")}
+            </Text>
+            <Entypo name="chevron-right" size={32} color={colors.font} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.section}>

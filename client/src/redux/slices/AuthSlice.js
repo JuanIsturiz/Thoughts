@@ -82,11 +82,18 @@ export const update = createAsyncThunk(
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetAuth: (state, action) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
@@ -100,7 +107,7 @@ export const authSlice = createSlice({
         state.user = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
@@ -114,7 +121,7 @@ export const authSlice = createSlice({
         state.user = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
@@ -128,7 +135,7 @@ export const authSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
       })
@@ -142,12 +149,12 @@ export const authSlice = createSlice({
         state.user = null;
       })
       .addCase(update.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
       .addCase(update.pending, (state, action) => {
-        state.isLoading = true;
+        // state.isLoading = true;
       })
       .addCase(update.rejected, (state, action) => {
         state.isLoading = false;
@@ -157,5 +164,7 @@ export const authSlice = createSlice({
       });
   },
 });
+
+export const { resetAuth } = authSlice.actions;
 
 export default authSlice.reducer;

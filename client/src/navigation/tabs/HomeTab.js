@@ -7,6 +7,7 @@ import SearchNavigator from "../stacks/SearchStack";
 import UserNavigator from "../stacks/UserStack";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
+import FeedNavigator from "../stacks/FeedStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,7 @@ export default function HomeNavigator() {
     >
       <Tab.Screen
         name="Feed"
-        component={FeedScreen}
+        component={FeedNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons

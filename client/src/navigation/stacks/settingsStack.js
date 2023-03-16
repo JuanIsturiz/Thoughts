@@ -8,6 +8,7 @@ import AccountScreen from "../../screens/AccountScreen";
 import LanguageScreen from "../../screens/LanguageScreen";
 import { useTranslation } from "react-i18next";
 import ThemeScreen from "../../screens/ThemeScreen";
+import LikedScreen from "../../screens/LikedScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,14 @@ export default function SettingsNavigator() {
         component={ShareProfile}
         options={{
           headerTitle: t("settings_stack.share_profile"),
+          headerLeft: () => <BackButton to={"Settings"} />,
+        }}
+      />
+      <Stack.Screen
+        name="Liked"
+        component={LikedScreen}
+        options={{
+          headerTitle: t("settings_stack.liked"),
           headerLeft: () => <BackButton to={"Settings"} />,
         }}
       />

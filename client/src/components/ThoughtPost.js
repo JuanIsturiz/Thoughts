@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   Animated,
+  Dimensions,
   Easing,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,10 +15,11 @@ import { formatDistance } from "date-fns";
 import Heart from "../icons/Heart";
 import { useDispatch, useSelector } from "react-redux";
 import { likeThought } from "../redux/slices/ThoughtSlice";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 const ThoughtPost = ({ thought, userPage }) => {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { _id, text, emotion, userInfo, createdAt, likes } = thought;
@@ -34,7 +37,6 @@ const ThoughtPost = ({ thought, userPage }) => {
       setLiked(true);
     }
   }, []);
-
   const onLike = () => {
     dispatch(
       likeThought({
@@ -50,7 +52,6 @@ const ThoughtPost = ({ thought, userPage }) => {
       }
     });
   };
-
   return (
     <Animated.View
       style={[
@@ -98,7 +99,9 @@ const ThoughtPost = ({ thought, userPage }) => {
             },
           ]}
         >
-          {formatDistance(new Date(createdAt), new Date(), { addSuffix: true })}
+          {formatDistance(new Date(createdAt), new Date(), {
+            addSuffix: true,
+          })}
         </Text>
         <View style={styles.icon_text}>
           <Text
@@ -121,9 +124,15 @@ const ThoughtPost = ({ thought, userPage }) => {
               size={25}
               color={emotion === "fear" ? "#777" : "#333"}
             />
-            <Text style={[styles.text, { color: emotionTextColor(emotion) }]}>
-              {userInfo.username}
-            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("User Profile", { userId: thought.userInfo.id })
+              }
+            >
+              <Text style={[styles.text, { color: emotionTextColor(emotion) }]}>
+                {userInfo.username}
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 5,
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.4,
     borderRadius: 5,
   },
   text: {

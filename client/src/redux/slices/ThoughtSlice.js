@@ -3,9 +3,9 @@ import { thoughtService } from "../services/ThoughtService";
 
 export const getAllThoughts = createAsyncThunk(
   "thought/getAll",
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
-      return await thoughtService.getAllThoughts();
+      return await thoughtService.getAllThoughts(page);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -18,9 +18,9 @@ export const getAllThoughts = createAsyncThunk(
 
 export const getThoughtsByUser = createAsyncThunk(
   "thought/getByUser",
-  async (userId, thunkAPI) => {
+  async (info, thunkAPI) => {
     try {
-      return await thoughtService.getThoughtsByUser(userId);
+      return await thoughtService.getThoughtsByUser(info);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -48,9 +48,24 @@ export const getThoughtsByEmotion = createAsyncThunk(
 
 export const getThoughtsByUsername = createAsyncThunk(
   "thought/getByUsername",
-  async (username, thunkAPI) => {
+  async (info, thunkAPI) => {
     try {
-      return await thoughtService.getThoughtsByUsername(username);
+      return await thoughtService.getThoughtsByUsername(info);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getLikedThoughts = createAsyncThunk(
+  "thought/getLiked",
+  async (info, thunkAPI) => {
+    try {
+      return await thoughtService.getLikedThoughts(info);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -111,6 +126,13 @@ const initialState = {
   searchParam: "",
   userThoughts: [],
   searchThoughts: [],
+  likedThoughts: [],
+  pages: {
+    feed: 0,
+    user: 0,
+    search: 0,
+    liked: 0,
+  },
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -121,6 +143,12 @@ export const thoughtSlice = createSlice({
   name: "thoughts",
   initialState,
   reducers: {
+    resetThought: (state, action) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
     setSearchParam: (state, action) => {
       if (action.payload.touchable) {
         state.searchParam = state.searchParam + " " + action.payload.text;
@@ -130,6 +158,11 @@ export const thoughtSlice = createSlice({
     },
     resetSearchThoughts: (state, action) => {
       state.searchThoughts = [];
+      state.pages = { ...state.pages, search: 0 };
+    },
+    resetLikedThoughts: (state, action) => {
+      state.likedThoughts = [];
+      state.pages = { ...state.pages, liked: 0 };
     },
   },
   extraReducers: (builder) => {
@@ -140,7 +173,10 @@ export const thoughtSlice = createSlice({
       .addCase(getAllThoughts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.thoughts = action.payload;
+        state.thoughts = [...state.thoughts, ...action.payload.thoughts];
+        if (!action.payload.end) {
+          state.pages = { ...state.pages, feed: state.pages.feed + 1 };
+        }
       })
       .addCase(getAllThoughts.rejected, (state, action) => {
         state.isLoading = false;
@@ -153,7 +189,11 @@ export const thoughtSlice = createSlice({
       .addCase(getThoughtsByUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.userThoughts = action.payload;
+        state.userThoughts = [
+          ...state.userThoughts,
+          ...action.payload.thoughts,
+        ];
+        state.pages = { ...state.pages, user: state.pages.user + 1 };
       })
       .addCase(getThoughtsByUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -166,7 +206,11 @@ export const thoughtSlice = createSlice({
       .addCase(getThoughtsByEmotion.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.searchThoughts = action.payload;
+        state.searchThoughts = [
+          ...state.searchThoughts,
+          ...action.payload.thoughts,
+        ];
+        state.pages = { ...state.pages, search: state.pages.search + 1 };
       })
       .addCase(getThoughtsByEmotion.rejected, (state, action) => {
         state.isLoading = false;
@@ -179,9 +223,36 @@ export const thoughtSlice = createSlice({
       .addCase(getThoughtsByUsername.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.searchThoughts = action.payload;
+        state.searchThoughts = [
+          ...state.searchThoughts,
+          ...action.payload.thoughts,
+        ];
+        state.pages = {
+          ...state.pages,
+          search: state.pages.search + 1,
+        };
       })
       .addCase(getThoughtsByUsername.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getLikedThoughts.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getLikedThoughts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.likedThoughts = [
+          ...state.likedThoughts,
+          ...action.payload.thoughts,
+        ];
+        state.pages = {
+          ...state.pages,
+          liked: state.pages.liked + 1,
+        };
+      })
+      .addCase(getLikedThoughts.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -260,6 +331,11 @@ export const thoughtSlice = createSlice({
   },
 });
 
-export const { setSearchParam, resetSearchThoughts } = thoughtSlice.actions;
+export const {
+  resetThought,
+  setSearchParam,
+  resetSearchThoughts,
+  resetLikedThoughts,
+} = thoughtSlice.actions;
 
 export default thoughtSlice.reducer;

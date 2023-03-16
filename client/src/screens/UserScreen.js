@@ -1,32 +1,35 @@
-import { ScrollView } from "react-native";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import { useDispatch, useSelector } from "react-redux";
-import ThoughtPost from "../components/ThoughtPost";
-import { deleteThought, getThoughtsByUser } from "../redux/slices/ThoughtSlice";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getThoughtsByUser } from "../redux/slices/ThoughtSlice";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-
-//TODO fix user thoughts scroll, modal position (DIMENSIONS) and like bug on new thought, ADD BIO, initial uef LOCALIZATION
+import ThoughtList from "../components/ThoughtList";
+import LoadingSpinner from "../components/LoadingSpinner";
+import useError from "../hooks/useError";
+import ToastManager from "toastify-react-native";
+import Retry from "../components/Retry";
 
 const UserScreen = () => {
   const { t } = useTranslation("global");
   const { colors } = useTheme();
   const { navigate } = useNavigation();
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { userThoughts } = useSelector((state) => state.thought);
-  useEffect(() => {
-    dispatch(getThoughtsByUser(user.id));
-  }, [dispatch]);
+  const { userThoughts, pages, isLoading, isError, message } = useSelector(
+    (state) => state.thought
+  );
+  useError(isError, message);
 
-  const onDelete = (id) => {
-    dispatch(deleteThought(id));
+  const info = {
+    userId: user.id,
+    page: pages.user,
   };
 
+  if (isLoading && pages.user === 0) return <LoadingSpinner size={"large"} />;
+
   return (
-    <View style={{ backgroundColor: colors.bc }}>
+    <View style={{ flex: 1, backgroundColor: colors.bc }}>
+      <ToastManager duration={4000} />
       <View
         style={[
           styles.header,
@@ -53,35 +56,30 @@ const UserScreen = () => {
             <Feather name="settings" size={30} color={colors.lightblue} />
           </TouchableOpacity>
         </View>
-        <View style={styles.description}>
-          <Text style={{ color: colors.font, fontSize: 18 }}>
-            Sample user bio...
+        <View style={[styles.description, { borderColor: colors.lightBorder }]}>
+          <Text
+            style={{
+              color: colors.font,
+              fontSize: 18,
+            }}
+          >
+            {user.bio}
           </Text>
         </View>
       </View>
-      <ScrollView style={{ height: 700 }}>
-        <View style={styles.container}>
-          {userThoughts.length ? (
-            userThoughts.map((thought, idx) => (
-              <View
-                key={idx}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                <ThoughtPost thought={thought} userPage={true} />
-                <TouchableOpacity onPress={() => onDelete(thought._id)}>
-                  <Feather name="trash" color="#FF5C5C" size={30} />
-                </TouchableOpacity>
-              </View>
-            ))
-          ) : (
-            <Text>No thoughts to show :(</Text>
-          )}
-        </View>
-      </ScrollView>
+      <View style={{ flex: 1 }}>
+        {!isError ? (
+          <ThoughtList
+            page={pages.user}
+            thoughts={userThoughts}
+            getThoughts={getThoughtsByUser}
+            info={info}
+            userPage={true}
+          />
+        ) : (
+          <Retry />
+        )}
+      </View>
     </View>
   );
 };
