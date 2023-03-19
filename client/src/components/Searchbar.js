@@ -1,18 +1,18 @@
-import Fontisto from "@expo/vector-icons/Fontisto";
-import { useNavigation, useTheme } from "@react-navigation/native";
-import React from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import Fontisto from "@expo/vector-icons/Fontisto";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchParam } from "../redux/slices/ThoughtSlice";
 import { useTranslation } from "react-i18next";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 const Searchbar = () => {
   const { colors } = useTheme();
-
   const { t } = useTranslation("global");
+  const { navigate } = useNavigation();
+
   const dispatch = useDispatch();
   const { searchParam } = useSelector((state) => state.thought);
-  const { navigate } = useNavigation();
+
   const onSubmit = () => {
     if (searchParam === "") return;
     if (searchParam.includes("#") && searchParam.includes("@")) {
@@ -30,6 +30,7 @@ const Searchbar = () => {
     }
     dispatch(setSearchParam({ text: "" }));
   };
+
   return (
     <View
       style={[

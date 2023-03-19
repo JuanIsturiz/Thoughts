@@ -1,19 +1,19 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FeedScreen from "../../screens/FeedScreen";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchNavigator from "../stacks/SearchStack";
 import UserNavigator from "../stacks/UserStack";
+import FeedNavigator from "../stacks/FeedStack";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
-import FeedNavigator from "../stacks/FeedStack";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeNavigator() {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
+
   return (
     <Tab.Navigator
       screenOptions={{

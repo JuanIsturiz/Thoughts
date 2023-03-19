@@ -6,7 +6,7 @@ const User = require("../models/userModel");
 const Thought = require("../models/thoughtModel");
 
 // @desc    Register user
-// @route   POST /api/users
+// @route   POST /user/register
 // @access  Private
 exports.register = asyncHandler(async (req, res) => {
   const { username, email, password, password2 } = req.body;
@@ -55,8 +55,8 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 // @desc    Login user
-// @route   POST /api/users
-// @access  Private
+// @route   POST /user/login
+// @access  Public
 exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // inputs check
@@ -89,8 +89,8 @@ exports.login = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Register user
-// @route   POST /api/users
+// @desc    Updates user info
+// @route   PUT /user/:id
 // @access  Private
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -132,6 +132,9 @@ exports.update = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
+// @desc    Gets user info by id
+// @route   Get /user/:id
+// @access  Public
 exports.getUserInfo = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {

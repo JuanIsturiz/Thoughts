@@ -3,7 +3,7 @@ import IP from "../../constants/api";
 
 const API_URL = `${IP}/thought`;
 
-const getAllThoughts = async (page) => {
+const getFeedThoughts = async (page) => {
   const response = await axios.get(`${API_URL}?page=${page}`);
   return response.data;
 };
@@ -81,7 +81,7 @@ const likeThought = async (info) => {
 };
 
 export const thoughtService = {
-  getAllThoughts,
+  getFeedThoughts,
   getThoughtsByUser,
   getLikedThoughts,
   getThoughtsByEmotion,

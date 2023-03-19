@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { dark, light } from "../../constants/Themes";
 import {
   getAsyncStorage,
-  removeAsyncStorage,
   setAsyncStorage,
 } from "../../utils/asyncStorageHelper";
 
@@ -18,7 +17,7 @@ export const setLanguage = createAsyncThunk("global/setLang", async (lang) => {
 
 export const getTheme = createAsyncThunk("global/getTheme", async () => {
   const theme = await getAsyncStorage("theme");
-  return theme === "light" ? light : dark;
+  return theme === null ? light : theme === "light" ? light : dark;
 });
 
 export const setTheme = createAsyncThunk("global/setTheme", async (theme) => {
@@ -38,7 +37,7 @@ const globalSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getLanguage.pending, (state, action) => {
+      .addCase(getLanguage.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getLanguage.fulfilled, (state, action) => {
@@ -52,7 +51,7 @@ const globalSlice = createSlice({
         state.message = action.payload;
         state.language = "en";
       })
-      .addCase(setLanguage.pending, (state, action) => {
+      .addCase(setLanguage.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(setLanguage.fulfilled, (state, action) => {
@@ -66,7 +65,7 @@ const globalSlice = createSlice({
         state.message = action.payload;
         state.language = "en";
       })
-      .addCase(getTheme.pending, (state, action) => {
+      .addCase(getTheme.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getTheme.fulfilled, (state, action) => {
@@ -80,7 +79,7 @@ const globalSlice = createSlice({
         state.message = action.payload;
         state.theme = light;
       })
-      .addCase(setTheme.pending, (state, action) => {
+      .addCase(setTheme.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(setTheme.fulfilled, (state, action) => {

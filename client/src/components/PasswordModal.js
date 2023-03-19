@@ -1,6 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { useState } from "react";
 import {
   Dimensions,
   Modal,
@@ -8,7 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  StyleSheet,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { update } from "../redux/slices/AuthSlice";
 import { useTranslation } from "react-i18next";
@@ -17,10 +17,11 @@ import { useTheme } from "@react-navigation/native";
 const PasswordModal = ({ showModal, setShowModal, user }) => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
 
   const dispatch = useDispatch();
+
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
@@ -54,6 +55,7 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
     setPassword2("");
     setShowModal(false);
   };
+
   return (
     <Modal
       animationType="slide"
@@ -69,7 +71,7 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
           {
             backgroundColor: colors.bc,
             position: "absolute",
-            left: windowWidth / 2 - 175,
+            left: windowWidth / 2 - 195,
             top: windowHeight / 2 - 125,
           },
         ]}
@@ -128,7 +130,9 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
           style={[styles.touchable, { backgroundColor: colors.lightblue }]}
           onPress={onSuccess}
         >
-          <Text style={{ fontSize: 24, color: colors.font }}>Update</Text>
+          <Text style={{ fontSize: 24, color: colors.font }}>
+            {t("password_modal.submit")}
+          </Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -138,10 +142,11 @@ const PasswordModal = ({ showModal, setShowModal, user }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 5,
-    width: 350,
+    width: 390,
     backgroundColor: "#FFF",
     borderWidth: 1,
     borderColor: "#DDD",
+    borderRadius: 5,
   },
   textInput: {
     width: "70%",

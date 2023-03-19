@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,8 +14,10 @@ import { useTranslation } from "react-i18next";
 
 const MainScreen = () => {
   const { t } = useTranslation("global");
+  const { navigate } = useNavigation();
 
   const animatedValue = useState(new Animated.Value(1))[0];
+
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -35,7 +37,6 @@ const MainScreen = () => {
       { iterations: -1 }
     ).start();
   }, []);
-  const { navigate } = useNavigation();
 
   return (
     <LinearGradient

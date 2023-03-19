@@ -8,7 +8,7 @@ const thoughtsSchema = new mongoose.Schema(
     },
     emotion: {
       type: String,
-      required: true, //todo change to false
+      required: true,
     },
     likes: {
       type: [mongoose.Schema.Types.ObjectId],

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Animated,
-  Dimensions,
   Easing,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,20 +9,28 @@ import {
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
-import { formatDistance } from "date-fns";
 import Heart from "../icons/Heart";
+import { formatDistance } from "date-fns";
+import { en, es } from "date-fns/locale";
 import { useDispatch, useSelector } from "react-redux";
 import { likeThought } from "../redux/slices/ThoughtSlice";
 import { useNavigation, useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const ThoughtPost = ({ thought, userPage }) => {
-  const { colors } = useTheme();
-  const { navigate } = useNavigation();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
   const { _id, text, emotion, userInfo, createdAt, likes } = thought;
+  const { colors } = useTheme();
+  const { t } = useTranslation("global");
+  const { navigate } = useNavigation();
+
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+  const { language } = useSelector((state) => state.global);
+
   const [liked, setLiked] = useState(false);
   const animatedValue = useState(new Animated.Value(0))[0];
+
   useEffect(() => {
     Animated.timing(animatedValue, {
       useNativeDriver: true,
@@ -37,6 +43,7 @@ const ThoughtPost = ({ thought, userPage }) => {
       setLiked(true);
     }
   }, []);
+
   const onLike = () => {
     dispatch(
       likeThought({
@@ -52,6 +59,7 @@ const ThoughtPost = ({ thought, userPage }) => {
       }
     });
   };
+
   return (
     <Animated.View
       style={[
@@ -84,7 +92,7 @@ const ThoughtPost = ({ thought, userPage }) => {
         <TouchableOpacity onPress={onLike}>
           <Heart
             fill={liked}
-            strokeColor={emotion === "fear" ? "#777" : "#333"}
+            strokeColor={emotion === "fear" ? "#EEE" : "#333"}
           />
         </TouchableOpacity>
 
@@ -101,6 +109,7 @@ const ThoughtPost = ({ thought, userPage }) => {
         >
           {formatDistance(new Date(createdAt), new Date(), {
             addSuffix: true,
+            locale: language === "en" ? en : es,
           })}
         </Text>
         <View style={styles.icon_text}>
@@ -114,7 +123,7 @@ const ThoughtPost = ({ thought, userPage }) => {
               },
             ]}
           >
-            {emotion}
+            {t(`emotions.${emotion}`)}
           </Text>
         </View>
         {!userPage && (
@@ -122,7 +131,7 @@ const ThoughtPost = ({ thought, userPage }) => {
             <AntDesign
               name="user"
               size={25}
-              color={emotion === "fear" ? "#777" : "#333"}
+              color={emotion === "fear" ? "#EEE" : "#333"}
             />
             <TouchableOpacity
               onPress={() =>

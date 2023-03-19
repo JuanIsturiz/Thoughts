@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUpScreen from "../../screens/SignUpScreen";
 import SignInScreen from "../../screens/SignInScreen";
@@ -9,6 +8,7 @@ const Stack = createNativeStackNavigator();
 
 export default function AuthNavigator() {
   const { t } = useTranslation("global");
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}

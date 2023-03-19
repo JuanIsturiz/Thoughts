@@ -7,37 +7,34 @@ import { getUser } from "./src/redux/slices/AuthSlice";
 import { useEffect } from "react";
 import { View } from "react-native";
 import I18Next from "./src/providers/I18Next";
-import { getLanguage, getTheme } from "./src/redux/slices/GlobalSlice";
+import {
+  getLanguage,
+  getTheme,
+  setLanguage,
+} from "./src/redux/slices/GlobalSlice";
 import { useTranslation } from "react-i18next";
-import LoadingSpinner from "./src/components/LoadingSpinner";
 import * as Localization from "expo-localization";
-
-/////TODO fix user thoughts scroll
-/////TODO modal position (DIMENSIONS)
-/////TODO like bug on new thought
-/////TODO initial uef LOCALIZATION
-/////TODO ADD BIO
-/////TODO add user profile screen
-//TODO handle errors
 
 const AppWrapper = () => {
   const { i18n } = useTranslation("global");
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { theme } = useSelector((state) => state.global);
+
   useEffect(() => {
     dispatch(getLanguage()).then((res) => {
       if (res.payload === null) {
-        i18n.changeLanguage(Localization.locale.slice(0, 2));
+        const localLanguage = Localization.locale.slice(0, 2);
+        i18n.changeLanguage(localLanguage);
+        dispatch(setLanguage(localLanguage));
       } else {
         i18n.changeLanguage(res.payload);
+        dispatch(setLanguage(res.payload));
       }
     });
     dispatch(getTheme());
     dispatch(getUser());
   }, [dispatch]);
-
-  // if (isLoading) return <LoadingSpinner size={"large"} />;
 
   return (
     <View

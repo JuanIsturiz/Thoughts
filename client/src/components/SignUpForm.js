@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -7,15 +6,18 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { register } from "../redux/slices/AuthSlice";
 import { useDispatch } from "react-redux";
+import { register } from "../redux/slices/AuthSlice";
 import { useTranslation } from "react-i18next";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 const SignUpForm = () => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
-  const dispatch = useDispatch();
   const { navigate } = useNavigation();
+
+  const dispatch = useDispatch();
+
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -33,6 +35,7 @@ const SignUpForm = () => {
       setIsValidEmail(true);
     }
   };
+
   return (
     <>
       <View style={styles.view}>

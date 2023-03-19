@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   View,
@@ -8,26 +8,28 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
 import { Picker } from "@react-native-picker/picker";
 import { createThought } from "../redux/slices/ThoughtSlice";
 import { useDispatch } from "react-redux";
-import emotions, { emotionTextColor, indexOfEmotion } from "../utils/emotions";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
 
 const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
-  const [text, setText] = useState("");
-  const [selectedEmotion, setSelectedEmotion] = useState("contempt");
 
   const dispatch = useDispatch();
+
+  const [text, setText] = useState("");
+  const [selectedEmotion, setSelectedEmotion] = useState("contempt");
 
   const onClose = () => {
     setShowModal(!showModal);
     setSelectedEmotion(emotions[0].value);
     setText("");
   };
+
   const onThink = async () => {
     if (!text) return;
     await dispatch(
@@ -64,14 +66,14 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
       >
         <View style={styles.close}>
           <TouchableOpacity onPress={onClose}>
-            <AntDesign name="close" color="#000" size={30} />
+            <AntDesign name="close" color={colors.lightBorder} size={30} />
           </TouchableOpacity>
         </View>
         <View style={styles.main}>
           <Text style={{ color: colors.font, fontSize: 16, marginBottom: 5 }}>
             {t("thought_modal.question")}
           </Text>
-          <View style={styles.box}>
+          <View style={[styles.box, { borderColor: colors.lightBorder }]}>
             <TextInput
               style={[styles.textInput, { color: colors.font }]}
               autoFocus={true}
@@ -84,7 +86,7 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
           </View>
         </View>
         <View style={styles.bottom}>
-          <View style={styles.picker}>
+          <View style={[styles.picker, { borderColor: colors.lightBorder }]}>
             <Picker
               itemStyle={{ fontSize: 16 }}
               selectedValue={selectedEmotion}
@@ -95,7 +97,7 @@ const ThoughtModal = ({ showModal, setShowModal, userInfo }) => {
               {emotions.map((emotion, idx) => (
                 <Picker.Item
                   key={idx}
-                  label={emotion.value}
+                  label={t(`emotions.${emotion.value}`)}
                   value={emotion.value}
                   color={colors.font}
                 />

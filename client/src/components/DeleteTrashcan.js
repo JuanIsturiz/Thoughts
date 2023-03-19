@@ -1,13 +1,12 @@
-import { Feather } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
-import {} from "react-native";
+import { useEffect, useState } from "react";
 import { TouchableOpacity, Easing, Animated } from "react-native";
-import {} from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { deleteThought } from "../redux/slices/ThoughtSlice";
 
 const DeleteTrashcan = ({ thoughtId }) => {
   const dispatch = useDispatch();
+
   const animatedValue = useState(new Animated.Value(0))[0];
 
   useEffect(() => {

@@ -1,17 +1,27 @@
-import { useTheme } from "@react-navigation/native";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
-import { Text } from "react-native";
-import { Modal, TouchableOpacity, View, Dimensions } from "react-native";
+import {
+  Modal,
+  TouchableOpacity,
+  View,
+  Dimensions,
+  Text,
+  StyleSheet,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/AuthSlice";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const LogoutModal = ({ showModal, setShowModal }) => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
   const dispatch = useDispatch();
+
+  const onLogout = async () => {
+    await dispatch(logout());
+  };
+
   const windowWidth = Dimensions.get("window").width;
+
   return (
     <Modal
       animationType="slide"
@@ -33,17 +43,17 @@ const LogoutModal = ({ showModal, setShowModal }) => {
       >
         <TouchableOpacity
           style={[styles.touchable, { backgroundColor: "#f08080" }]}
-          onPress={() => dispatch(logout())}
+          onPress={onLogout}
         >
-          <Text style={{ fontSize: 26, color: "#FFF" }}>
+          <Text style={{ fontSize: 26, color: colors.font }}>
             {t("logout_modal.logout")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.touchable, { backgroundColor: "#CCC" }]}
+          style={[styles.touchable, { backgroundColor: colors.lightblue }]}
           onPress={() => setShowModal(false)}
         >
-          <Text style={{ fontSize: 26, color: "#FFF" }}>
+          <Text style={{ fontSize: 26, color: colors.font }}>
             {t("logout_modal.cancel")}
           </Text>
         </TouchableOpacity>

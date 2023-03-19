@@ -1,7 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const Thought = require("../models/thoughtModel");
 
-exports.getAll = asyncHandler(async (req, res) => {
+// @desc    Get feed thoughts
+// @route   GET /thoughts
+// @access  Public
+exports.getFeed = asyncHandler(async (req, res) => {
   const { page } = req.query;
   try {
     const thoughts = await Thought.find()
@@ -15,6 +18,9 @@ exports.getAll = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get thought by id
+// @route   GET /thoughts/:id
+// @access  Public
 exports.getById = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -28,6 +34,9 @@ exports.getById = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get thoughts by user id
+// @route   GET /thoughts/user/:id
+// @access  Public
 exports.getByUserId = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const page = Number(req.query.page);
@@ -43,6 +52,9 @@ exports.getByUserId = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get only liked thoughts by user
+// @route   GET /thoughts/user/:id/liked
+// @access  Public
 exports.getLiked = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const page = Number(req.query.page);
@@ -58,6 +70,9 @@ exports.getLiked = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get thoughts by emotion
+// @route   GET /thoughts/search/emotion
+// @access  Public
 exports.getByEmotion = asyncHandler(async (req, res) => {
   const page = Number(req.query.page);
   const multiple = req.query.multiple === "true";
@@ -86,6 +101,9 @@ exports.getByEmotion = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get thoughts by username
+// @route   GET /thoughts/search/username
+// @access  Public
 exports.getByUsername = asyncHandler(async (req, res) => {
   const { username } = req.query;
   const page = Number(req.query.page);
@@ -101,6 +119,9 @@ exports.getByUsername = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Creates a new thought
+// @route   POST /thoughts
+// @access  Private
 exports.addThought = asyncHandler(async (req, res) => {
   const { text, emotion, userId, username } = req.body;
   if (!text) {
@@ -126,6 +147,9 @@ exports.addThought = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Deletes thought by id
+// @route   DELETE /thoughts/:id
+// @access  Public
 exports.deleteById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -137,6 +161,9 @@ exports.deleteById = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Updates if thought is liked by user
+// @route   PUT /thoughts/:id
+// @access  Public
 exports.updateById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { userId, action } = req.body;

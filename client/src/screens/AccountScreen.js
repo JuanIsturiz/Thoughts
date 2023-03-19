@@ -1,27 +1,20 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Editable from "../components/Editable";
 import PasswordModal from "../components/PasswordModal";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
 
 const AccountScreen = ({ route }) => {
-  const { t } = useTranslation("global");
   const { colors } = useTheme();
+  const { t } = useTranslation("global");
   const { user } = route.params;
-  const [showModal, setShowModal] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
   const [edit, setEdit] = useState({
     username: false,
     email: false,
   });
-
   const [userInfo, setUserInfo] = useState({
     username: user.username,
     email: user.email,

@@ -97,7 +97,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(getUser.pending, (state, action) => {
+      .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getUser.rejected, (state, action) => {
@@ -111,7 +111,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(register.pending, (state, action) => {
+      .addCase(register.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(register.rejected, (state, action) => {
@@ -125,7 +125,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(login.pending, (state, action) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(login.rejected, (state, action) => {
@@ -134,12 +134,12 @@ export const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
-      .addCase(logout.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
       })
-      .addCase(logout.pending, (state, action) => {
+      .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(logout.rejected, (state, action) => {
@@ -166,5 +166,7 @@ export const authSlice = createSlice({
 });
 
 export const { resetAuth } = authSlice.actions;
+
+export const token = (state) => state.auth.user.token;
 
 export default authSlice.reducer;

@@ -11,14 +11,18 @@ import ToastManager from "toastify-react-native";
 import Retry from "../components/Retry";
 
 const UserScreen = () => {
-  const { t } = useTranslation("global");
   const { colors } = useTheme();
+  const { t } = useTranslation("global");
   const { navigate } = useNavigation();
+
   const { user } = useSelector((state) => state.auth);
-  const { userThoughts, pages, isLoading, isError, message } = useSelector(
-    (state) => state.thought
+  const { userThoughts, pages, isLoading, isError, message, errors } =
+    useSelector((state) => state.thought);
+
+  useError(
+    isError ? isError : errors.user.isError,
+    message ? message : errors.user.msg
   );
-  useError(isError, message);
 
   const info = {
     userId: user.id,
@@ -68,7 +72,7 @@ const UserScreen = () => {
         </View>
       </View>
       <View style={{ flex: 1 }}>
-        {!isError ? (
+        {!errors.user.isError ? (
           <ThoughtList
             page={pages.user}
             thoughts={userThoughts}
@@ -77,7 +81,7 @@ const UserScreen = () => {
             userPage={true}
           />
         ) : (
-          <Retry />
+          <Retry get={getThoughtsByUser} info={info} />
         )}
       </View>
     </View>

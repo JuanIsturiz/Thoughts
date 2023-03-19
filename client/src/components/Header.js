@@ -1,10 +1,10 @@
-import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import EntyPo from "@expo/vector-icons/Entypo";
 import { useTheme } from "@react-navigation/native";
 
 const Header = ({ onModal }) => {
   const { colors } = useTheme();
+
   return (
     <View style={[styles.container, { borderBottomColor: colors.lightBorder }]}>
       <Text style={[styles.title, { color: colors.font }]}>Thoughts</Text>

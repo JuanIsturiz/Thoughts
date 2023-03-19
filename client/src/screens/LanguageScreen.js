@@ -1,16 +1,16 @@
-import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { setLanguage } from "../redux/slices/GlobalSlice";
+import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const LanguageScreen = () => {
   const { colors } = useTheme();
+  const [t, i18n] = useTranslation("global");
 
   const dispatch = useDispatch();
   const { language } = useSelector((state) => state.global);
-  const [t, i18n] = useTranslation("global");
+
   return (
     <View style={[styles.container, { backgroundColor: colors.bc }]}>
       <Text style={[styles.title, { color: colors.font }]}>

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const {
-  getAll,
+  getFeed,
   getById,
   getByEmotion,
   addThought,
@@ -15,7 +15,7 @@ const {
 const authenticate = require("../middleware/auth");
 
 // get all thoughts
-router.get("/", getAll);
+router.get("/", getFeed);
 
 // get thought by id
 router.get("/:id", getById);

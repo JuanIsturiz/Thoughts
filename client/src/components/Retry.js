@@ -1,15 +1,19 @@
-import { useTheme } from "@react-navigation/native";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Text } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { resetThought } from "../redux/slices/ThoughtSlice";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const Retry = () => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
+
   const dispatch = useDispatch();
+
+  const onSubmit = async () => {
+    await dispatch(resetThought());
+  };
+
   return (
     <TouchableOpacity
       style={{
@@ -22,7 +26,7 @@ const Retry = () => {
         borderRadius: 5,
         borderColor: colors.ligthBorder,
       }}
-      onPress={() => dispatch(resetThought())}
+      onPress={onSubmit}
     >
       <Text style={{ fontSize: 24 }}>{t("retry.text")}</Text>
     </TouchableOpacity>

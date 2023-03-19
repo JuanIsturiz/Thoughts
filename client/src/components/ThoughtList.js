@@ -1,12 +1,11 @@
-import { Feather } from "@expo/vector-icons";
-import { useTheme } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { FlatList, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
 import DeleteTrashcan from "./DeleteTrashcan";
 import LoadingSpinner from "./LoadingSpinner";
 import ThoughtPost from "./ThoughtPost";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const ThoughtList = ({ page, thoughts, getThoughts, info, userPage }) => {
   const { colors } = useTheme();
@@ -15,6 +14,7 @@ const ThoughtList = ({ page, thoughts, getThoughts, info, userPage }) => {
 
   const [end, setEnd] = useState(false);
   const [endCheck, setEndCheck] = useState(false);
+
   useEffect(() => {
     if (page > 0) return;
     dispatch(getThoughts(info ? info : page));

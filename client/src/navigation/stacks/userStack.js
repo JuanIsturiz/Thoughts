@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 
 export default function UserNavigator() {
   const { t } = useTranslation("global");
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}

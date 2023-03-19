@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import axios from "axios";
-import API_URL from "../constants/api";
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { StyleSheet } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { Text } from "react-native";
 import ThoughtList from "../components/ThoughtList";
 import {
   getThoughtsByUsername,
@@ -16,30 +12,31 @@ import ToastManager, { Toast } from "toastify-react-native";
 import useError from "../hooks/useError";
 import { useTranslation } from "react-i18next";
 import Retry from "../components/Retry";
-
-const getUserInfo = async (id) => {
-  const response = await axios.get(`${API_URL}/user/${id}/search`);
-  return response.data;
-};
+import { getUserInfo } from "../utils/getUserInfo";
 
 const UserProfileScreen = ({ route }) => {
   const { t } = useTranslation("global");
-  const { userId } = route.params;
   const { colors } = useTheme();
+  const { userId } = route.params;
+
   const dispatch = useDispatch();
+  const { searchThoughts, pages, isLoading, isError, message, errors } =
+    useSelector((state) => state.thought);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const { searchThoughts, pages, isLoading, isError, message } = useSelector(
-    (state) => state.thought
+  useError(
+    isError ? isError : errors.search.isError,
+    message ? message : errors.search.msg
   );
-  useError(isError, message);
 
   useEffect(() => {
     setLoading(true);
     getUserInfo(userId)
       .then((res) => {
+        setError(false);
         setLoading(false);
         setUser(res);
       })

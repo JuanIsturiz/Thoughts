@@ -1,9 +1,9 @@
-import React from "react";
-import { useTheme } from "@react-navigation/native";
 import { ActivityIndicator, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 const LoadingSpinner = ({ size, spacing }) => {
   const { colors } = useTheme();
+
   return (
     <View
       style={{

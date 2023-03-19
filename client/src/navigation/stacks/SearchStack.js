@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchScreen from "../../screens/SearchScreen";
 import EmotionSearchScreen from "../../screens/EmotionSearchScreen";
@@ -9,6 +8,7 @@ const Stack = createNativeStackNavigator();
 
 export default function SearchNavigator() {
   const { t } = useTranslation("global");
+
   return (
     <Stack.Navigator
       screenOptions={{

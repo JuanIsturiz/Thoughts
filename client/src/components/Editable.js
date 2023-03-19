@@ -1,4 +1,3 @@
-import React from "react";
 import {
   StyleSheet,
   Text,
@@ -25,6 +24,7 @@ const Editable = ({
   multi,
 }) => {
   const { colors } = useTheme();
+
   const dispatch = useDispatch();
 
   const onConfirm = async () => {
@@ -53,6 +53,7 @@ const Editable = ({
     setValue(initValue);
     setEdit(false);
   };
+
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { color: colors.font }]}>{title}</Text>

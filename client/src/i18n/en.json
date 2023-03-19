@@ -40,10 +40,19 @@
     "display": "Display",
     "language_opt": "Language",
     "theme_opt": "Theme",
+    "about": "About",
+    "copyright_opt": "Copyright",
     "login": "Log In",
     "sign_out_opt": "Sign Out"
   },
-  "share_profile": {},
+  "share_profile": {
+    "grant_access": "Please grant access for camera",
+    "allow": "Allow Camera",
+    "username": "Username",
+    "bio": "Bio",
+    "go_to": "Go to user",
+    "scan_again": "Scan Again"
+  },
   "sign_in": {
     "title": "Sign In"
   },
@@ -68,7 +77,8 @@
     "confirm_placeholder": "Confirm your password here...",
     "space_alert": "Invalid character detected. Please try again",
     "unmatch_alert": "Passwords doesn't match. Please try again",
-    "confirm_submit_alert": "Passwords doesn't match"
+    "confirm_submit_alert": "Passwords doesn't match",
+    "submit": "Update"
   },
   "retry": {
     "text": "Retry"
@@ -131,7 +141,8 @@
     "share_profile": "Share Profile",
     "liked": "Liked Thoughts",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "copyright": "Copyright"
   },
   "user_stack": {
     "profile": "Profile",
@@ -142,5 +153,19 @@
     "feed": "Feed",
     "search": "Search",
     "user": "User"
+  },
+  "UTILS": {},
+  "emotions": {
+    "contempt": "contempt",
+    "fear": "fear",
+    "anger": "anger",
+    "shame": "shame",
+    "surprise": "surprise",
+    "disgust": "disgust",
+    "joy": "joy",
+    "distress": "distress",
+    "interest": "interest",
+    "guilt": "guilt",
+    "multiple": "Multiple Emotions"
   }
 }

@@ -40,10 +40,19 @@
     "display": "Interfaz",
     "language_opt": "Idioma",
     "theme_opt": "Tema",
+    "about": "Acerca De",
+    "copyright_opt": "Copyright",
     "login": "Sesion",
     "sign_out_opt": "Cerrar Session"
   },
-  "share_profile": {},
+  "share_profile": {
+    "grant_access": "Por favor otorga acceso a la camara",
+    "allow": "Permitir Camara",
+    "username": "Usuario",
+    "bio": "biografia",
+    "go_to": "Ir a usuario",
+    "scan_again": "Escanear de Nuevo"
+  },
   "sign_in": {
     "title": "Iniciar Sesion"
   },
@@ -68,7 +77,8 @@
     "confirm_placeholder": "Confirma tu nueva contraseña aqui...",
     "space_alert": "Caracteres invalidos detectados. Por favor intentalo de nuevo",
     "unmatch_alert": "Las contraseñas no coinciden. Por favor intentalo de nuevo",
-    "confirm_submit_alert": "Las contraseñas no coinciden"
+    "confirm_submit_alert": "Las contraseñas no coinciden",
+    "submit": "Actualizar"
   },
   "retry": {
     "text": "Reintentar"
@@ -100,7 +110,7 @@
   },
   "theme_form": {},
   "thoughtlist": {
-    "end": "LLegaste a el final",
+    "end": "Llegaste a el final",
     "not_found": "No se encontraron pensamientos"
   },
   "thought_modal": {
@@ -131,7 +141,8 @@
     "share_profile": "Compartir Perfil",
     "liked": "Me Gusta",
     "language": "Idioma",
-    "theme": "Tema"
+    "theme": "Tema",
+    "copyright": "Copyright"
   },
   "user_stack": {
     "profile": "Perfil",
@@ -142,5 +153,19 @@
     "feed": "Inicio",
     "search": "Buscar",
     "user": "Usuario"
+  },
+  "UTILS": {},
+  "emotions": {
+    "contempt": "contento",
+    "fear": "miedo",
+    "anger": "enojo",
+    "shame": "vergüenza",
+    "surprise": "sorpresa",
+    "disgust": "disgusto",
+    "joy": "alegria",
+    "distress": "desinteres",
+    "interest": "interes",
+    "guilt": "culpa",
+    "multiple": "Multiples Emociones"
   }
 }

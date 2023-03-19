@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { thoughtService } from "../services/ThoughtService";
 
-export const getAllThoughts = createAsyncThunk(
+export const getFeedThoughts = createAsyncThunk(
   "thought/getAll",
   async (page, thunkAPI) => {
     try {
-      return await thoughtService.getAllThoughts(page);
+      return await thoughtService.getFeedThoughts(page);
     } catch (err) {
       const message =
         (err.response && err.response.data && err.response.data.message) ||
@@ -122,11 +122,29 @@ export const likeThought = createAsyncThunk(
 );
 
 const initialState = {
-  thoughts: [],
-  searchParam: "",
+  feedThoughts: [],
   userThoughts: [],
   searchThoughts: [],
   likedThoughts: [],
+  searchParam: "",
+  errors: {
+    feed: {
+      isError: false,
+      msg: "",
+    },
+    user: {
+      isError: false,
+      msg: "",
+    },
+    search: {
+      isError: false,
+      msg: "",
+    },
+    liked: {
+      isError: false,
+      msg: "",
+    },
+  },
   pages: {
     feed: 0,
     user: 0,
@@ -143,11 +161,27 @@ export const thoughtSlice = createSlice({
   name: "thoughts",
   initialState,
   reducers: {
-    resetThought: (state, action) => {
-      state.isError = false;
+    resetThought: (state) => {
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = "";
+      state.errors = {
+        feed: {
+          isError: false,
+          msg: "",
+        },
+        user: {
+          isError: false,
+          msg: "",
+        },
+        search: {
+          isError: false,
+          msg: "",
+        },
+        liked: {
+          isError: false,
+          msg: "",
+        },
+      };
     },
     setSearchParam: (state, action) => {
       if (action.payload.touchable) {
@@ -156,37 +190,59 @@ export const thoughtSlice = createSlice({
         state.searchParam = action.payload.text;
       }
     },
-    resetSearchThoughts: (state, action) => {
+    resetSearchThoughts: (state) => {
       state.searchThoughts = [];
       state.pages = { ...state.pages, search: 0 };
     },
-    resetLikedThoughts: (state, action) => {
+    resetLikedThoughts: (state) => {
       state.likedThoughts = [];
       state.pages = { ...state.pages, liked: 0 };
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllThoughts.pending, (state, action) => {
+      .addCase(getFeedThoughts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllThoughts.fulfilled, (state, action) => {
+      .addCase(getFeedThoughts.fulfilled, (state, action) => {
+        state.errors = {
+          ...state.errors,
+          feed: {
+            isError: false,
+            msg: "",
+          },
+        };
         state.isLoading = false;
         state.isSuccess = true;
-        state.thoughts = [...state.thoughts, ...action.payload.thoughts];
+        state.feedThoughts = [
+          ...state.feedThoughts,
+          ...action.payload.thoughts,
+        ];
         if (!action.payload.end) {
           state.pages = { ...state.pages, feed: state.pages.feed + 1 };
         }
       })
-      .addCase(getAllThoughts.rejected, (state, action) => {
+      .addCase(getFeedThoughts.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.errors = {
+          ...state.errors,
+          feed: {
+            isError: true,
+            msg: action.payload,
+          },
+        };
       })
-      .addCase(getThoughtsByUser.pending, (state, action) => {
+      .addCase(getThoughtsByUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getThoughtsByUser.fulfilled, (state, action) => {
+        state.errors = {
+          ...state.errors,
+          user: {
+            isError: false,
+            msg: "",
+          },
+        };
         state.isLoading = false;
         state.isSuccess = true;
         state.userThoughts = [
@@ -197,13 +253,25 @@ export const thoughtSlice = createSlice({
       })
       .addCase(getThoughtsByUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.errors = {
+          ...state.errors,
+          user: {
+            isError: true,
+            msg: action.payload,
+          },
+        };
       })
-      .addCase(getThoughtsByEmotion.pending, (state, action) => {
+      .addCase(getThoughtsByEmotion.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getThoughtsByEmotion.fulfilled, (state, action) => {
+        state.errors = {
+          ...state.errors,
+          search: {
+            isError: false,
+            msg: "",
+          },
+        };
         state.isLoading = false;
         state.isSuccess = true;
         state.searchThoughts = [
@@ -214,13 +282,25 @@ export const thoughtSlice = createSlice({
       })
       .addCase(getThoughtsByEmotion.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.errors = {
+          ...state.errors,
+          search: {
+            isError: true,
+            msg: action.payload,
+          },
+        };
       })
-      .addCase(getThoughtsByUsername.pending, (state, action) => {
+      .addCase(getThoughtsByUsername.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getThoughtsByUsername.fulfilled, (state, action) => {
+        state.errors = {
+          ...state.errors,
+          user: {
+            isError: false,
+            msg: "",
+          },
+        };
         state.isLoading = false;
         state.isSuccess = true;
         state.searchThoughts = [
@@ -234,13 +314,25 @@ export const thoughtSlice = createSlice({
       })
       .addCase(getThoughtsByUsername.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.errors = {
+          ...state.errors,
+          user: {
+            isError: true,
+            msg: action.payload,
+          },
+        };
       })
-      .addCase(getLikedThoughts.pending, (state, action) => {
+      .addCase(getLikedThoughts.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getLikedThoughts.fulfilled, (state, action) => {
+        state.errors = {
+          ...state.errors,
+          liked: {
+            isError: false,
+            msg: "",
+          },
+        };
         state.isLoading = false;
         state.isSuccess = true;
         state.likedThoughts = [
@@ -254,16 +346,23 @@ export const thoughtSlice = createSlice({
       })
       .addCase(getLikedThoughts.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.errors = {
+          ...state.errors,
+          liked: {
+            isError: true,
+            msg: action.payload,
+          },
+        };
       })
-      .addCase(createThought.pending, (state, action) => {
+      .addCase(createThought.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(createThought.fulfilled, (state, action) => {
+        state.isError = false;
+        state.message = "";
         state.isLoading = false;
         state.isSuccess = true;
-        state.thoughts = [action.payload, ...current(state.thoughts)];
+        state.feedThoughts = [action.payload, ...current(state.feedThoughts)];
         state.userThoughts = [action.payload, ...current(state.userThoughts)];
       })
       .addCase(createThought.rejected, (state, action) => {
@@ -271,13 +370,15 @@ export const thoughtSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(deleteThought.pending, (state, action) => {
+      .addCase(deleteThought.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteThought.fulfilled, (state, action) => {
+        state.isError = false;
+        state.message = "";
         state.isLoading = false;
         state.isSuccess = true;
-        state.thoughts = current(state.thoughts).filter(
+        state.feedThoughts = current(state.feedThoughts).filter(
           (thought) => thought._id !== action.payload
         );
         state.userThoughts = current(state.userThoughts).filter(
@@ -289,15 +390,17 @@ export const thoughtSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(likeThought.pending, (state, action) => {
+      .addCase(likeThought.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(likeThought.fulfilled, (state, action) => {
+        state.isError = false;
+        state.message = "";
         state.isLoading = false;
         state.isSuccess = true;
 
         if (action.payload.action === "like") {
-          state.thoughts = current(state.thoughts).map((thought) => {
+          state.feedThoughts = current(state.feedThoughts).map((thought) => {
             if (thought._id === action.payload.id) {
               return {
                 ...thought,
@@ -309,7 +412,7 @@ export const thoughtSlice = createSlice({
           });
         }
         if (action.payload.action === "unlike") {
-          state.thoughts = current(state.thoughts).map((thought) => {
+          state.feedThoughts = current(state.feedThoughts).map((thought) => {
             if (thought._id === action.payload.id) {
               return {
                 ...thought,

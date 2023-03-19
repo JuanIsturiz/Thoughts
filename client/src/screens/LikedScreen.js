@@ -1,5 +1,4 @@
-import { useTheme } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ToastManager from "toastify-react-native";
@@ -11,15 +10,20 @@ import {
   getLikedThoughts,
   resetLikedThoughts,
 } from "../redux/slices/ThoughtSlice";
+import { useTheme } from "@react-navigation/native";
 
 const LikedScreen = ({ route }) => {
   const { userId } = route.params;
   const { colors } = useTheme();
+
   const dispatch = useDispatch();
-  const { likedThoughts, pages, isLoading, isError, message } = useSelector(
-    (state) => state.thought
+  const { likedThoughts, pages, isLoading, isError, message, errors } =
+    useSelector((state) => state.thought);
+
+  useError(
+    isError ? isError : errors.liked.isError,
+    message ? message : errors.liked.msg
   );
-  useError(isError, message);
 
   useEffect(() => {
     return () => {
@@ -33,10 +37,11 @@ const LikedScreen = ({ route }) => {
   };
 
   if (isLoading && pages.liked === 0) return <LoadingSpinner size={"large"} />;
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.bc }}>
       <ToastManager duration={4000} />
-      {!isError ? (
+      {!errors.liked.isError ? (
         <ThoughtList
           page={pages.liked}
           thoughts={likedThoughts}

@@ -1,20 +1,22 @@
-import { useNavigation, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, Text, TouchableOpacity } from "react-native";
-import SettingsScreen from "../../screens/SettingsScreen";
+import { TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import ShareProfile from "../../screens/ShareProfile";
+import SettingsScreen from "../../screens/SettingsScreen";
+import ShareProfileScreen from "../../screens/ShareProfileScreen";
 import AccountScreen from "../../screens/AccountScreen";
 import LanguageScreen from "../../screens/LanguageScreen";
-import { useTranslation } from "react-i18next";
 import ThemeScreen from "../../screens/ThemeScreen";
 import LikedScreen from "../../screens/LikedScreen";
+import { useTranslation } from "react-i18next";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import CopyrightScreen from "../../screens/CopyrightScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function SettingsNavigator() {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
+
   return (
     <Stack.Navigator
       initialRouteName="Settings"
@@ -41,7 +43,7 @@ export default function SettingsNavigator() {
       />
       <Stack.Screen
         name="Share Profile"
-        component={ShareProfile}
+        component={ShareProfileScreen}
         options={{
           headerTitle: t("settings_stack.share_profile"),
           headerLeft: () => <BackButton to={"Settings"} />,
@@ -68,6 +70,14 @@ export default function SettingsNavigator() {
         component={ThemeScreen}
         options={{
           headerTitle: t("settings_stack.theme"),
+          headerLeft: () => <BackButton to={"Settings"} />,
+        }}
+      />
+      <Stack.Screen
+        name="Copyright"
+        component={CopyrightScreen}
+        options={{
+          headerTitle: `${t("settings_stack.copyright")} \u00A9`,
           headerLeft: () => <BackButton to={"Settings"} />,
         }}
       />

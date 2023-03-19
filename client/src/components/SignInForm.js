@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -10,12 +9,15 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/AuthSlice";
 import { useTranslation } from "react-i18next";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 const SignInForm = () => {
   const { colors } = useTheme();
   const { t } = useTranslation("global");
-  const dispatch = useDispatch();
   const { navigate } = useNavigation();
+
+  const dispatch = useDispatch();
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",

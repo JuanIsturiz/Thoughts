@@ -14,14 +14,16 @@ import Retry from "../components/Retry";
 
 const UserSearchScreen = ({ route }) => {
   const { colors } = useTheme();
+  const { username } = route.params;
 
   const dispatch = useDispatch();
-  const { searchThoughts, pages, isLoading, isError, message } = useSelector(
-    (state) => state.thought
-  );
-  useError(isError, message);
+  const { searchThoughts, pages, isLoading, isError, message, errors } =
+    useSelector((state) => state.thought);
 
-  const { username } = route.params;
+  useError(
+    isError ? isError : errors.search.isError,
+    message ? message : errors.search.msg
+  );
 
   useEffect(() => {
     return () => {
@@ -50,7 +52,7 @@ const UserSearchScreen = ({ route }) => {
           {username}
         </Text>
       </View>
-      {!isError ? (
+      {!errors.search.isError ? (
         <ThoughtList
           page={pages.search}
           thoughts={searchThoughts}
@@ -58,7 +60,7 @@ const UserSearchScreen = ({ route }) => {
           info={info}
         />
       ) : (
-        <Retry />
+        <Retry get={getThoughtsByUsername} info={info} />
       )}
     </View>
   );
