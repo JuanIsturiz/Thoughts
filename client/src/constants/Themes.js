@@ -10,7 +10,7 @@ export const light = {
     tabInactive: "#AAA",
     tabActive: "#BCCEF8",
     shadow: "#000",
-    ph: "#DDD",
+    ph: "#AAA",
   },
 };
 

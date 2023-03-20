@@ -24,8 +24,9 @@ exports.register = asyncHandler(async (req, res) => {
   }
 
   // duplicate check
-  const dupCheck = await User.findOne({ email });
-  if (dupCheck) {
+  const emailCheck = await User.findOne({ email });
+  const usernameCheck = await User.findOne({ email });
+  if (usernameCheck || emailCheck) {
     res.status(400);
     throw new Error("User already exists");
   }

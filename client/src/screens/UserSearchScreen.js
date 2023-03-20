@@ -5,16 +5,18 @@ import {
   resetSearchThoughts,
 } from "../redux/slices/ThoughtSlice";
 import { useEffect } from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import ThoughtList from "../components/ThoughtList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ToastManager from "toastify-react-native";
 import useError from "../hooks/useError";
 import Retry from "../components/Retry";
+import { TouchableOpacity } from "react-native";
 
 const UserSearchScreen = ({ route }) => {
   const { colors } = useTheme();
   const { username } = route.params;
+  const { navigate } = useNavigation();
 
   const dispatch = useDispatch();
   const { searchThoughts, pages, isLoading, isError, message, errors } =
@@ -30,6 +32,50 @@ const UserSearchScreen = ({ route }) => {
       dispatch(resetSearchThoughts());
     };
   }, [dispatch]);
+
+  if (errors.search.isError) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.bc }}>
+        <View
+          style={{
+            marginTop: 50,
+            alignSelf: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: colors.font,
+              fontSize: 24,
+              textAlign: "center",
+              marginBottom: 10,
+            }}
+          >
+            {`No result found for ${username}`}
+          </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: colors.lightblue,
+              paddingVertical: 5,
+              paddingHorizontal: 10,
+              borderColor: colors.lightBorder,
+              borderWidth: 2,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              navigate("Search", { screen: "Intro" });
+              dispatch(resetSearchThoughts());
+            }}
+          >
+            <Text
+              style={{ color: colors.font, fontSize: 24, textAlign: "center" }}
+            >
+              Go back to search screen
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
   const info = {
     page: pages.search,
@@ -60,7 +106,7 @@ const UserSearchScreen = ({ route }) => {
           info={info}
         />
       ) : (
-        <Retry get={getThoughtsByUsername} info={info} />
+        <Retry />
       )}
     </View>
   );

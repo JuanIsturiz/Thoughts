@@ -78,9 +78,7 @@ const AccountScreen = ({ route }) => {
         input={"bio"}
         initValue={user.bio}
         value={userInfo.bio}
-        setValue={(text) =>
-          setUserInfo((prev) => ({ ...prev, bio: text.toLowerCase() }))
-        }
+        setValue={(text) => setUserInfo((prev) => ({ ...prev, bio: text }))}
         placeHolder={t("account.bio_placeholder")}
         edit={edit.bio}
         setEdit={(bool) => {
@@ -90,7 +88,7 @@ const AccountScreen = ({ route }) => {
         trim={() =>
           setUserInfo((prev) => ({
             ...prev,
-            username: userInfo.bio.trim(),
+            bio: userInfo.bio.trim(),
           }))
         }
         user={user}

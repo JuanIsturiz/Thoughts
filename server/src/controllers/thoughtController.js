@@ -76,6 +76,36 @@ exports.getLiked = asyncHandler(async (req, res) => {
 exports.getByEmotion = asyncHandler(async (req, res) => {
   const page = Number(req.query.page);
   const multiple = req.query.multiple === "true";
+
+  const emotions = [
+    "contempt",
+    "fear",
+    "anger",
+    "shame",
+    "surprise",
+    "disgust",
+    "joy",
+    "distress",
+    "interest",
+    "guilt",
+  ];
+
+  if (!multiple) {
+    if (!emotions.includes(req.query.emotion)) {
+      res.status(400);
+      throw new Error(`Not results found for #${req.query.emotion}`);
+    }
+  } else {
+    const check = [];
+    for (const emotion of req.query.emotion) {
+      check.push(emotions.includes(emotion));
+    }
+    if (check.every((e) => e === false)) {
+      res.status(400);
+      throw new Error("Invalid emotion found. Please try again");
+    }
+  }
+
   try {
     const thoughts = [];
     if (!multiple) {
@@ -112,6 +142,12 @@ exports.getByUsername = asyncHandler(async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(page * 8)
       .limit(8);
+
+    if (!thoughts.length) {
+      res.status(400);
+      throw new Error(`No user found with username: ${username}`);
+    }
+
     res.json({ thoughts, end: thoughts.length < 5 });
   } catch (err) {
     res.status(500);

@@ -282,6 +282,7 @@ export const thoughtSlice = createSlice({
       })
       .addCase(getThoughtsByEmotion.rejected, (state, action) => {
         state.isLoading = false;
+
         state.errors = {
           ...state.errors,
           search: {
@@ -316,7 +317,7 @@ export const thoughtSlice = createSlice({
         state.isLoading = false;
         state.errors = {
           ...state.errors,
-          user: {
+          search: {
             isError: true,
             msg: action.payload,
           },
