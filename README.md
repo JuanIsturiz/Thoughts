@@ -72,34 +72,34 @@ A react-native application where I put in practice my mobile development skills,
 
 ### Previews
 
-![App Preview Image 1](/images/preview-01.png "App Preview Image 1")
+![App Preview Image 1](/images/preview-01.PNG "App Preview Image 1")
 
-![App Preview Image 2](/images/preview-02.png "App Preview Image 2")
+![App Preview Image 2](/images/preview-02.PNG "App Preview Image 2")
 
-![App Preview Image 3](/images/preview-03.png "App Preview Image 3")
+![App Preview Image 3](/images/preview-03.PNG "App Preview Image 3")
 
-![App Preview Image 4](/images/preview-04.png "App Preview Image 4")
+![App Preview Image 4](/images/preview-04.PNG "App Preview Image 4")
 
-![App Preview Image 5](/images/preview-05.png "App Preview Image 5")
+![App Preview Image 5](/images/preview-05.PNG "App Preview Image 5")
 
-![App Preview Image 6](/images/preview-06.png "App Preview Image 6")
+![App Preview Image 6](/images/preview-06.PNG "App Preview Image 6")
 
-![App Preview Image 7](/images/preview-07.png "App Preview Image 7")
+![App Preview Image 7](/images/preview-07.PNG "App Preview Image 7")
 
-![App Preview Image 8](/images/preview-08.png "App Preview Image 8")
+![App Preview Image 8](/images/preview-08.PNG "App Preview Image 8")
 
-![App Preview Image 9](/images/preview-09.png "App Preview Image 9")
+![App Preview Image 9](/images/preview-09.PNG "App Preview Image 9")
 
-![App Preview Image 10](/images/preview-10.png "App Preview Image 10")
+![App Preview Image 10](/images/preview-10.PNG "App Preview Image 10")
 
-![App Preview Image 11](/images/preview-11.png "App Preview Image 11")
+![App Preview Image 11](/images/preview-11.PNG "App Preview Image 11")
 
-![App Preview Image 12](/images/preview-12.png "App Preview Image 12")
+![App Preview Image 12](/images/preview-12.PNG "App Preview Image 12")
 
-![App Preview Image 13](/images/preview-13.png "App Preview Image 13")
+![App Preview Image 13](/images/preview-13.PNG "App Preview Image 13")
 
-![App Preview Image 14](/images/preview-14.png "App Preview Image 14")
+![App Preview Image 14](/images/preview-14.PNG "App Preview Image 14")
 
-![App Preview Image 15](/images/preview-15.png "App Preview Image 15")
+![App Preview Image 15](/images/preview-15.PNG "App Preview Image 15")
 
-![App Preview Image 16](/images/preview-16.png "App Preview Image 16")
+![App Preview Image 16](/images/preview-16.PNG "App Preview Image 16")
